@@ -135,7 +135,57 @@ body.lang-en [data-lang="es"] { display: none; }
   background:radial-gradient(circle, rgba(27,107,147,.1) 0%, transparent 70%);
   filter:blur(40px); animation:float 10s ease-in-out infinite reverse;
 }
+.hero-inner {
+  display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center;
+  max-width:1200px; width:100%; margin:0 auto; position:relative; z-index:3;
+}
 .hero-content { max-width:720px; position:relative; z-index:3; }
+
+/* FLOATING CARDS */
+@keyframes floatCard1 { 0%,100%{transform:translate(0,0) rotate(-3deg)} 50%{transform:translate(8px,-18px) rotate(1deg)} }
+@keyframes floatCard2 { 0%,100%{transform:translate(0,0) rotate(2deg)} 50%{transform:translate(-10px,-14px) rotate(-2deg)} }
+@keyframes floatCard3 { 0%,100%{transform:translate(0,0) rotate(-1deg)} 50%{transform:translate(12px,-20px) rotate(3deg)} }
+@keyframes floatCard4 { 0%,100%{transform:translate(0,0) rotate(3deg)} 50%{transform:translate(-8px,-16px) rotate(-1deg)} }
+@keyframes floatCard5 { 0%,100%{transform:translate(0,0) rotate(-2deg)} 50%{transform:translate(6px,-12px) rotate(2deg)} }
+
+.hero-cards {
+  position:relative; width:100%; height:480px; z-index:3;
+}
+.hero-float-card {
+  position:absolute; display:flex; align-items:center; gap:.75rem;
+  background:var(--white); border-radius:18px; padding:1rem 1.25rem;
+  box-shadow:0 8px 32px rgba(0,0,0,.08); border:1px solid rgba(0,0,0,.05);
+  transition:transform .3s ease, box-shadow .3s ease;
+  cursor:default; white-space:nowrap;
+}
+.hero-float-card:hover {
+  transform:scale(1.07)!important; box-shadow:0 14px 44px rgba(0,0,0,.13);
+}
+.hero-float-card .card-emoji {
+  font-size:2.2rem; line-height:1;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.1));
+}
+.hero-float-card .card-info h4 {
+  font-size:.92rem; font-weight:700; color:var(--night); margin-bottom:.15rem;
+}
+.hero-float-card .card-info span {
+  font-size:.75rem; color:var(--text-muted); font-weight:500;
+}
+.hero-float-card .card-badge {
+  font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+  padding:.2rem .6rem; border-radius:50px; margin-left:auto;
+}
+
+.hfc-boat { top:5%; left:10%; animation:floatCard1 6s ease-in-out infinite; }
+.hfc-boat .card-badge { background:#E3F2FD; color:var(--ocean); }
+.hfc-adventure { top:22%; right:5%; animation:floatCard2 7s ease-in-out infinite .5s; }
+.hfc-adventure .card-badge { background:#FFF3E0; color:#E65100; }
+.hfc-fish { top:44%; left:5%; animation:floatCard3 5.5s ease-in-out infinite 1s; }
+.hfc-fish .card-badge { background:#E0F2F1; color:#00695C; }
+.hfc-food { top:62%; right:10%; animation:floatCard4 6.5s ease-in-out infinite 1.5s; }
+.hfc-food .card-badge { background:#FCE4EC; color:#C62828; }
+.hfc-yacht { top:80%; left:15%; animation:floatCard5 7.5s ease-in-out infinite 2s; }
+.hfc-yacht .card-badge { background:#E8EAF6; color:#283593; }
 .hero-tag {
   display:inline-flex; align-items:center; gap:.5rem;
   background:var(--white); border:1px solid rgba(0,0,0,.08); border-radius:50px;
@@ -352,6 +402,17 @@ footer .footer-hours { color:rgba(255,255,255,.55); margin-bottom:.5rem; font-we
   .topbar { padding:.75rem 1.25rem; }
   .topbar-links a:not(.topbar-wa) { display:none; }
   .hero { padding:7rem 1.5rem 4rem; }
+  .hero-inner { grid-template-columns:1fr; gap:2rem; }
+  .hero-cards { height:340px; margin-top:1rem; }
+  .hero-float-card { padding:.75rem 1rem; }
+  .hero-float-card .card-emoji { font-size:1.6rem; }
+  .hero-float-card .card-info h4 { font-size:.8rem; }
+  .hero-float-card .card-info span { font-size:.68rem; }
+  .hfc-boat { top:0; left:5%; }
+  .hfc-adventure { top:18%; right:2%; }
+  .hfc-fish { top:38%; left:0; }
+  .hfc-food { top:58%; right:5%; }
+  .hfc-yacht { top:78%; left:8%; }
   .about-inner { grid-template-columns:1fr; gap:2.5rem; }
   section { padding:3.5rem 1.5rem; }
   .exp-grid { grid-template-columns:1fr; }
@@ -398,59 +459,120 @@ footer .footer-hours { color:rgba(255,255,255,.55); margin-bottom:.5rem; font-we
 <section class="hero">
   <div class="hero-blob"></div>
   <div class="hero-blob2"></div>
-  <div class="hero-content">
+  <div class="hero-inner">
+    <div class="hero-content">
 
-    <div class="hero-tag fade-up" data-lang="es">
-      <span class="dot"></span> Disponibles hoy · 9AM – 5PM (Hora del Pacífico)
+      <div class="hero-tag fade-up" data-lang="es">
+        <span class="dot"></span> Disponibles hoy · 9AM – 5PM (Hora del Pacífico)
+      </div>
+      <div class="hero-tag fade-up" data-lang="en">
+        <span class="dot"></span> Available today · 9AM – 5PM (Pacific Time)
+      </div>
+
+      <h1 class="fade-up fade-up-d1" data-lang="es">Tu aventura en Cabo,<br><em>a tu manera.</em></h1>
+      <h1 class="fade-up fade-up-d1" data-lang="en">Your Cabo adventure,<br><em>your way.</em></h1>
+
+      <p class="hero-desc fade-up fade-up-d2" data-lang="es">Nada de formularios eternos ni apps genéricas. Platícanos qué quieres vivir y nosotros lo hacemos realidad. Trato directo, sin intermediarios.</p>
+      <p class="hero-desc fade-up fade-up-d2" data-lang="en">No endless forms or generic apps. Tell us what you want to experience and we'll make it happen. Direct service, no middlemen.</p>
+
+      <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Quiero%20planear%20mi%20aventura%20en%20Cabo%20🌊" target="_blank" class="hero-cta fade-up fade-up-d3" data-lang="es">
+        <svg width="20" height="20" fill="currentColor"><use href="#wa-icon"/></svg>
+        Planea tu aventura
+      </a>
+      <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I%20want%20to%20plan%20my%20Cabo%20adventure%20🌊" target="_blank" class="hero-cta fade-up fade-up-d3" data-lang="en">
+        <svg width="20" height="20" fill="currentColor"><use href="#wa-icon"/></svg>
+        Plan Your Adventure
+      </a>
+
+      <div class="hero-trust fade-up fade-up-d4" data-lang="es">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Pago seguro
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Respuesta en minutos
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Trato personal
+        </div>
+      </div>
+      <div class="hero-trust fade-up fade-up-d4" data-lang="en">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Secure payment
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Reply in minutes
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Personal service
+        </div>
+      </div>
+
     </div>
-    <div class="hero-tag fade-up" data-lang="en">
-      <span class="dot"></span> Available today · 9AM – 5PM (Pacific Time)
+
+    <!-- FLOATING ACTIVITY CARDS -->
+    <div class="hero-cards fade-up fade-up-d2">
+      <div class="hero-float-card hfc-boat">
+        <span class="card-emoji">🚤</span>
+        <div class="card-info">
+          <h4 data-lang="es">Tours en Barco</h4>
+          <h4 data-lang="en">Boat Tours</h4>
+          <span data-lang="es">Snorkel · Arco · Playa del Amor</span>
+          <span data-lang="en">Snorkel · Arch · Lover's Beach</span>
+        </div>
+        <span class="card-badge" data-lang="es">Popular</span>
+        <span class="card-badge" data-lang="en">Popular</span>
+      </div>
+      <div class="hero-float-card hfc-adventure">
+        <span class="card-emoji">🏜️</span>
+        <div class="card-info">
+          <h4 data-lang="es">Aventura Extrema</h4>
+          <h4 data-lang="en">Extreme Adventure</h4>
+          <span data-lang="es">ATVs · Tirolesas · Camellos</span>
+          <span data-lang="en">ATVs · Ziplines · Camels</span>
+        </div>
+        <span class="card-badge" data-lang="es">Adrenalina</span>
+        <span class="card-badge" data-lang="en">Adrenaline</span>
+      </div>
+      <div class="hero-float-card hfc-fish">
+        <span class="card-emoji">🎣</span>
+        <div class="card-info">
+          <h4 data-lang="es">Pesca Deportiva</h4>
+          <h4 data-lang="en">Sport Fishing</h4>
+          <span data-lang="es">Marlín · Dorado · Atún</span>
+          <span data-lang="en">Marlin · Dorado · Tuna</span>
+        </div>
+        <span class="card-badge" data-lang="es">Clásico</span>
+        <span class="card-badge" data-lang="en">Classic</span>
+      </div>
+      <div class="hero-float-card hfc-food">
+        <span class="card-emoji">🌮</span>
+        <div class="card-info">
+          <h4 data-lang="es">Gastronomía</h4>
+          <h4 data-lang="en">Food & Nightlife</h4>
+          <span data-lang="es">Tacos · Cenas · Nightlife</span>
+          <span data-lang="en">Tacos · Dinners · Nightlife</span>
+        </div>
+        <span class="card-badge" data-lang="es">Sabores</span>
+        <span class="card-badge" data-lang="en">Flavors</span>
+      </div>
+      <div class="hero-float-card hfc-yacht">
+        <span class="card-emoji">🛥️</span>
+        <div class="card-info">
+          <h4 data-lang="es">Renta de Yates</h4>
+          <h4 data-lang="en">Yacht Rentals</h4>
+          <span data-lang="es">Privados · Tripulación · Barra libre</span>
+          <span data-lang="en">Private · Full Crew · Open Bar</span>
+        </div>
+        <span class="card-badge" data-lang="es">Premium</span>
+        <span class="card-badge" data-lang="en">Premium</span>
+      </div>
     </div>
-
-    <h1 class="fade-up fade-up-d1" data-lang="es">Tu aventura en Cabo,<br><em>a tu manera.</em></h1>
-    <h1 class="fade-up fade-up-d1" data-lang="en">Your Cabo adventure,<br><em>your way.</em></h1>
-
-    <p class="hero-desc fade-up fade-up-d2" data-lang="es">Nada de formularios eternos ni apps genéricas. Platícanos qué quieres vivir y nosotros lo hacemos realidad. Trato directo, sin intermediarios.</p>
-    <p class="hero-desc fade-up fade-up-d2" data-lang="en">No endless forms or generic apps. Tell us what you want to experience and we'll make it happen. Direct service, no middlemen.</p>
-
-    <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Quiero%20planear%20mi%20aventura%20en%20Cabo%20🌊" target="_blank" class="hero-cta fade-up fade-up-d3" data-lang="es">
-      <svg width="20" height="20" fill="currentColor"><use href="#wa-icon"/></svg>
-      Planea tu aventura
-    </a>
-    <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I%20want%20to%20plan%20my%20Cabo%20adventure%20🌊" target="_blank" class="hero-cta fade-up fade-up-d3" data-lang="en">
-      <svg width="20" height="20" fill="currentColor"><use href="#wa-icon"/></svg>
-      Plan Your Adventure
-    </a>
-
-    <div class="hero-trust fade-up fade-up-d4" data-lang="es">
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Pago seguro
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        Respuesta en minutos
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Trato personal
-      </div>
-    </div>
-    <div class="hero-trust fade-up fade-up-d4" data-lang="en">
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Secure payment
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-        Reply in minutes
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Personal service
-      </div>
-    </div>
-
   </div>
 </section>
 
