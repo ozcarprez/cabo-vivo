@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cabo Vivo — Tu Aventura, a Tu Manera</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fire: #E8552D;
+  --fire-light: #FF7A50;
+  --ocean: #1B6B93;
+  --ocean-deep: #0F3D5C;
+  --sand: #F5E6D0;
+  --sand-light: #FFF8F0;
+  --night: #111A2B;
+  --lime: #C4D34E;
+  --white: #FFFFFF;
+  --text-dark: #1A1A2E;
+  --text-muted: #5A6275;
+  --whatsapp: #25D366;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-dark);
+  background: var(--sand-light);
+  overflow-x: hidden;
+}
+
+/* ===== LANG SYSTEM ===== */
+[data-lang="en"] { display: none; }
+body.lang-en [data-lang="en"] { display: revert; }
+body.lang-en [data-lang="es"] { display: none; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(30px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes float {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-8px); }
+}
+@keyframes pulse {
+  0%,100% { transform:scale(1); }
+  50% { transform:scale(1.05); }
+}
+
+.fade-up { animation: fadeUp .7s ease both; }
+.fade-up-d1 { animation-delay: .1s; }
+.fade-up-d2 { animation-delay: .2s; }
+.fade-up-d3 { animation-delay: .3s; }
+.fade-up-d4 { animation-delay: .4s; }
+
+/* ===== WHATSAPP FLOATING ===== */
+.wa-float {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 1000;
+  display: flex; align-items: center; gap: .75rem;
+  background: var(--whatsapp); color: var(--white); text-decoration: none;
+  padding: .85rem 1.5rem; border-radius: 60px;
+  font-weight: 600; font-size: .95rem;
+  box-shadow: 0 8px 32px rgba(37,211,102,.35);
+  transition: all .3s ease; animation: pulse 2.5s ease infinite;
+}
+.wa-float:hover {
+  transform: scale(1.06); box-shadow: 0 12px 40px rgba(37,211,102,.45); animation: none;
+}
+.wa-float svg { width:24px; height:24px; flex-shrink:0; }
+
+/* ===== TOPBAR ===== */
+.topbar {
+  position: fixed; top:0; left:0; right:0; z-index:900;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2.5rem;
+  background: rgba(255,248,240,.85); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; color: var(--night); text-decoration: none; letter-spacing: -.02em;
+}
+.logo span { color: var(--fire); }
+.topbar-right { display:flex; gap:1.5rem; align-items:center; }
+.topbar-links { display:flex; gap:2rem; align-items:center; }
+.topbar-links a {
+  text-decoration:none; color:var(--text-muted); font-size:.9rem; font-weight:500; transition:color .2s;
+}
+.topbar-links a:hover { color:var(--fire); }
+.topbar-wa {
+  display:inline-flex; align-items:center; gap:.4rem;
+  background:var(--whatsapp); color:var(--white)!important;
+  padding:.5rem 1.15rem; border-radius:50px; font-weight:600!important; font-size:.85rem!important;
+  transition:transform .2s, box-shadow .2s;
+}
+.topbar-wa:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(37,211,102,.3); }
+
+/* LANG SWITCHER */
+.lang-switch {
+  display: flex; background: rgba(0,0,0,.05); border-radius: 50px; padding: 3px; gap: 2px;
+}
+.lang-btn {
+  border: none; background: transparent; padding: .35rem .75rem; border-radius: 50px;
+  font-family: 'DM Sans', sans-serif; font-size: .8rem; font-weight: 600;
+  color: var(--text-muted); cursor: pointer; transition: all .25s;
+}
+.lang-btn.active {
+  background: var(--white); color: var(--night);
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+}
+.lang-btn:hover:not(.active) { color: var(--night); }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh; display:flex; align-items:center;
+  padding: 8rem 2.5rem 4rem; position:relative;
+  background: linear-gradient(165deg, var(--sand-light) 0%, var(--sand) 40%, rgba(27,107,147,.08) 100%);
+  overflow: hidden;
+}
+.hero::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:120px;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,64 C360,120 720,0 1080,64 C1260,96 1380,80 1440,72 L1440,120 L0,120Z' fill='%23FFF8F0'/%3E%3C/svg%3E") no-repeat bottom center;
+  background-size:cover; z-index:2;
+}
+.hero-blob {
+  position:absolute; top:10%; right:-5%; width:500px; height:500px; border-radius:50%;
+  background:radial-gradient(circle, rgba(232,85,45,.1) 0%, transparent 70%);
+  filter:blur(40px); animation:float 8s ease-in-out infinite;
+}
+.hero-blob2 {
+  position:absolute; bottom:15%; left:-8%; width:400px; height:400px; border-radius:50%;
+  background:radial-gradient(circle, rgba(27,107,147,.1) 0%, transparent 70%);
+  filter:blur(40px); animation:float 10s ease-in-out infinite reverse;
+}
+.hero-content { max-width:720px; position:relative; z-index:3; }
+.hero-tag {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--white); border:1px solid rgba(0,0,0,.08); border-radius:50px;
+  padding:.45rem 1.1rem; font-size:.82rem; font-weight:600; color:var(--ocean);
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+.hero-tag .dot {
+  width:8px; height:8px; background:var(--whatsapp); border-radius:50%;
+  animation:pulse 2s ease infinite;
+}
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,7vw,5rem); line-height:1.05;
+  color:var(--night); margin: 1.75rem 0 1.25rem;
+}
+.hero h1 em { color:var(--fire); font-style:italic; }
+.hero-desc {
+  font-size:clamp(1.05rem,2vw,1.2rem); line-height:1.7;
+  color:var(--text-muted); max-width:520px; margin-bottom:2.25rem; font-weight:300;
+}
+.hero-cta {
+  display:inline-flex; align-items:center; gap:.6rem;
+  background:var(--fire); color:var(--white); text-decoration:none;
+  padding:1rem 2rem; border-radius:60px; font-weight:600; font-size:1.05rem;
+  transition:all .3s ease; box-shadow:0 8px 30px rgba(232,85,45,.3);
+}
+.hero-cta:hover {
+  background:var(--fire-light); transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(232,85,45,.35);
+}
+.hero-cta svg { width:20px; height:20px; }
+.hero-trust {
+  margin-top:2.5rem; display:flex; align-items:center; gap:1.75rem; flex-wrap:wrap;
+}
+.trust-item {
+  display:flex; align-items:center; gap:.4rem;
+  font-size:.85rem; color:var(--text-muted); font-weight:500;
+}
+.trust-item svg { width:18px; height:18px; color:var(--ocean); }
+
+/* ===== SECTIONS ===== */
+section { padding:5rem 2.5rem; }
+.section-label {
+  display:inline-block; font-size:.75rem; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--fire); margin-bottom:.75rem;
+}
+.section-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4.5vw,3rem); color:var(--night); margin-bottom:1rem;
+}
+.section-desc {
+  font-size:1.05rem; color:var(--text-muted); max-width:560px; line-height:1.7; font-weight:300;
+}
+
+/* ===== HOW ===== */
+.how { background:var(--white); text-align:center; }
+.how-grid {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+  gap:2.5rem; max-width:960px; margin:3rem auto 0;
+}
+.how-step {
+  padding:2rem 1.5rem; border-radius:20px; background:var(--sand-light);
+  border:1px solid rgba(0,0,0,.04); transition:transform .3s, box-shadow .3s;
+}
+.how-step:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,.06); }
+.step-num {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:48px; height:48px; border-radius:50%; background:var(--fire); color:var(--white);
+  font-family:'Playfair Display',serif; font-size:1.3rem; margin-bottom:1rem;
+}
+.how-step h3 { font-size:1.1rem; font-weight:700; margin-bottom:.5rem; color:var(--night); }
+.how-step p { font-size:.92rem; color:var(--text-muted); line-height:1.6; }
+
+/* ===== EXPERIENCES ===== */
+.experiences { background:var(--sand-light); }
+.exp-grid {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr));
+  gap:1.75rem; max-width:1200px; margin:3rem auto 0;
+}
+.exp-card {
+  border-radius:24px; overflow:hidden; background:var(--white);
+  border:1px solid rgba(0,0,0,.06); transition:transform .35s ease, box-shadow .35s ease; cursor:pointer;
+}
+.exp-card:hover { transform:translateY(-6px); box-shadow:0 20px 60px rgba(0,0,0,.1); }
+.exp-visual {
+  height:220px; display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.exp-visual .emoji-bg {
+  font-size:5rem; position:relative; z-index:2;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.1)); transition:transform .35s ease;
+}
+.exp-card:hover .emoji-bg { transform:scale(1.15) rotate(-3deg); }
+.v-boat { background:linear-gradient(135deg, #E3F2FD, #B3E5FC); }
+.v-adventure { background:linear-gradient(135deg, #FFF3E0, #FFCC80); }
+.v-fish { background:linear-gradient(135deg, #E0F2F1, #80CBC4); }
+.v-food { background:linear-gradient(135deg, #FCE4EC, #F8BBD0); }
+.v-yacht { background:linear-gradient(135deg, #E8EAF6, #C5CAE9); }
+.exp-tag {
+  position:absolute; top:1rem; left:1rem;
+  background:rgba(255,255,255,.92); backdrop-filter:blur(8px);
+  padding:.3rem .85rem; border-radius:50px; font-size:.72rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:.08em; color:var(--fire); z-index:3;
+}
+.exp-body { padding:1.5rem; }
+.exp-body h3 {
+  font-family:'Playfair Display',serif; font-size:1.35rem;
+  color:var(--night); margin-bottom:.5rem;
+}
+.exp-body p { font-size:.9rem; color:var(--text-muted); line-height:1.6; margin-bottom:1rem; }
+.exp-footer { display:flex; justify-content:space-between; align-items:center; }
+.exp-price { font-size:1.1rem; font-weight:700; color:var(--night); }
+.exp-price small { font-size:.75rem; font-weight:400; color:var(--text-muted); }
+.exp-btn {
+  display:inline-flex; align-items:center; gap:.35rem;
+  background:var(--fire); color:var(--white); text-decoration:none;
+  padding:.55rem 1.15rem; border-radius:50px; font-size:.82rem; font-weight:600;
+  transition:all .25s;
+}
+.exp-btn:hover { background:var(--fire-light); transform:translateY(-1px); }
+
+/* ===== ABOUT ===== */
+.about { background:var(--night); color:var(--white); }
+.about-inner {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center;
+}
+.about .section-label { color:var(--lime); }
+.about .section-title { color:var(--white); }
+.about .section-desc { color:rgba(255,255,255,.65); }
+.about-features { margin-top:2rem; display:flex; flex-direction:column; gap:1rem; }
+.about-feat { display:flex; align-items:flex-start; gap:1rem; }
+.feat-icon {
+  width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,.08);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.2rem;
+}
+.feat-text h4 { font-size:.95rem; font-weight:600; margin-bottom:.2rem; }
+.feat-text p { font-size:.85rem; color:rgba(255,255,255,.5); line-height:1.5; }
+.about-card {
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);
+  border-radius:28px; padding:2.5rem; text-align:center; backdrop-filter:blur(8px);
+}
+.about-card .avatar {
+  width:100px; height:100px; border-radius:50%;
+  background:linear-gradient(135deg, var(--fire), var(--ocean));
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.5rem; margin:0 auto 1.25rem; border:3px solid rgba(255,255,255,.15);
+}
+.about-card h3 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:.25rem; }
+.about-card .role { color:var(--fire-light); font-size:.85rem; font-weight:600; margin-bottom:1rem; }
+.about-card .quote {
+  font-size:.95rem; color:rgba(255,255,255,.6); line-height:1.7; font-style:italic; font-weight:300;
+}
+.about-card .hours-badge {
+  margin-top:1.5rem; display:inline-flex; align-items:center; gap:.5rem;
+  background:rgba(37,211,102,.12); border:1px solid rgba(37,211,102,.25);
+  color:var(--whatsapp); padding:.5rem 1.15rem; border-radius:50px;
+  font-size:.82rem; font-weight:600;
+}
+.hours-dot { width:8px; height:8px; background:#25D366; border-radius:50%; display:inline-block; }
+
+/* ===== TESTIMONIALS ===== */
+.testimonials { background:var(--white); text-align:center; }
+.test-grid {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:1.5rem; max-width:1000px; margin:3rem auto 0;
+}
+.test-card {
+  background:var(--sand-light); border-radius:20px; padding:2rem;
+  text-align:left; border:1px solid rgba(0,0,0,.04);
+}
+.test-stars { color:#F59E0B; font-size:1rem; margin-bottom:.75rem; letter-spacing:2px; }
+.test-card p { font-size:.92rem; color:var(--text-dark); line-height:1.65; margin-bottom:1rem; }
+.test-author { font-size:.82rem; color:var(--text-muted); font-weight:600; }
+
+/* ===== CTA FINAL ===== */
+.cta-final {
+  background:linear-gradient(135deg, var(--fire), var(--ocean-deep));
+  text-align:center; padding:5rem 2.5rem; color:var(--white);
+  position:relative; overflow:hidden;
+}
+.cta-final::before {
+  content:''; position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='20' cy='20' r='2'/%3E%3C/g%3E%3C/svg%3E");
+}
+.cta-final h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3.2rem); margin-bottom:1rem; position:relative;
+}
+.cta-final p {
+  font-size:1.1rem; opacity:.85; max-width:480px; margin:0 auto 2rem;
+  font-weight:300; position:relative;
+}
+.cta-wa {
+  display:inline-flex; align-items:center; gap:.6rem;
+  background:var(--white); color:var(--night); text-decoration:none;
+  padding:1rem 2.25rem; border-radius:60px; font-weight:700; font-size:1.05rem;
+  transition:all .3s ease; box-shadow:0 8px 32px rgba(0,0,0,.2); position:relative;
+}
+.cta-wa:hover {
+  transform:translateY(-3px) scale(1.03); box-shadow:0 14px 44px rgba(0,0,0,.25);
+}
+.cta-wa svg { width:22px; height:22px; color:var(--whatsapp); }
+
+/* ===== FOOTER ===== */
+footer {
+  background:var(--night); color:rgba(255,255,255,.4); text-align:center;
+  padding:2.5rem; font-size:.82rem;
+}
+footer .footer-hours { color:rgba(255,255,255,.55); margin-bottom:.5rem; font-weight:500; }
+
+/* ===== MOBILE ===== */
+@media (max-width:768px) {
+  .topbar { padding:.75rem 1.25rem; }
+  .topbar-links a:not(.topbar-wa) { display:none; }
+  .hero { padding:7rem 1.5rem 4rem; }
+  .about-inner { grid-template-columns:1fr; gap:2.5rem; }
+  section { padding:3.5rem 1.5rem; }
+  .exp-grid { grid-template-columns:1fr; }
+  .wa-float .wa-text { display:none; }
+  .wa-float { padding:.85rem; border-radius:50%; }
+}
+</style>
+</head>
+<body>
+
+<!-- WA ICON SVG (reused) -->
+<svg style="display:none">
+  <symbol id="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.111.553 4.093 1.518 5.818L0 24l6.336-1.652A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82c-1.893 0-3.683-.51-5.24-1.397l-.376-.223-3.896 1.02 1.04-3.796-.245-.39A9.778 9.778 0 012.18 12c0-5.422 4.398-9.82 9.82-9.82 5.422 0 9.82 4.398 9.82 9.82 0 5.422-4.398 9.82-9.82 9.82z"/></symbol>
+</svg>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Me%20interesan%20las%20actividades%20en%20Cabo" class="wa-float" target="_blank" id="waFloat">
+  <svg width="24" height="24" fill="currentColor"><use href="#wa-icon"/></svg>
+  <span class="wa-text" data-lang="es">Escríbenos</span>
+  <span class="wa-text" data-lang="en">Message Us</span>
+</a>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a href="#" class="logo">Cabo<span>Vivo</span></a>
+  <div class="topbar-right">
+    <div class="topbar-links">
+      <a href="#experiencias" data-lang="es">Experiencias</a>
+      <a href="#experiencias" data-lang="en">Experiences</a>
+      <a href="#como-funciona" data-lang="es">Cómo Funciona</a>
+      <a href="#como-funciona" data-lang="en">How It Works</a>
+      <a href="#nosotros" data-lang="es">Nosotros</a>
+      <a href="#nosotros" data-lang="en">About Us</a>
+      <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Quiero%20info%20sobre%20actividades%20en%20Cabo" target="_blank" class="topbar-wa">💬 WhatsApp</a>
+    </div>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-set-lang="es">ES</button>
+      <button class="lang-btn" data-set-lang="en">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blob"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-content">
+
+    <div class="hero-tag fade-up" data-lang="es">
+      <span class="dot"></span> Disponibles hoy · 9AM – 5PM (Hora del Pacífico)
+    </div>
+    <div class="hero-tag fade-up" data-lang="en">
+      <span class="dot"></span> Available today · 9AM – 5PM (Pacific Time)
+    </div>
+
+    <h1 class="fade-up fade-up-d1" data-lang="es">Tu aventura en Cabo,<br><em>a tu manera.</em></h1>
+    <h1 class="fade-up fade-up-d1" data-lang="en">Your Cabo adventure,<br><em>your way.</em></h1>
+
+    <p class="hero-desc fade-up fade-up-d2" data-lang="es">Nada de formularios eternos ni apps genéricas. Platícanos qué quieres vivir y nosotros lo hacemos realidad. Trato directo, sin intermediarios.</p>
+    <p class="hero-desc fade-up fade-up-d2" data-lang="en">No endless forms or generic apps. Tell us what you want to experience and we'll make it happen. Direct service, no middlemen.</p>
+
+    <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Quiero%20planear%20mi%20aventura%20en%20Cabo%20🌊" target="_blank" class="hero-cta fade-up fade-up-d3" data-lang="es">
+      <svg width="20" height="20" fill="currentColor"><use href="#wa-icon"/></svg>
+      Planea tu aventura
+    </a>
+    <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I%20want%20to%20plan%20my%20Cabo%20adventure%20🌊" target="_blank" class="hero-cta fade-up fade-up-d3" data-lang="en">
+      <svg width="20" height="20" fill="currentColor"><use href="#wa-icon"/></svg>
+      Plan Your Adventure
+    </a>
+
+    <div class="hero-trust fade-up fade-up-d4" data-lang="es">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Pago seguro
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Respuesta en minutos
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Trato personal
+      </div>
+    </div>
+    <div class="hero-trust fade-up fade-up-d4" data-lang="en">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Secure payment
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Reply in minutes
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Personal service
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="how" id="como-funciona">
+  <span class="section-label" data-lang="es">Así de fácil</span>
+  <span class="section-label" data-lang="en">Simple as that</span>
+  <h2 class="section-title" data-lang="es">¿Cómo funciona?</h2>
+  <h2 class="section-title" data-lang="en">How does it work?</h2>
+  <p class="section-desc" style="margin:0 auto" data-lang="es">Sin cuentas, sin apps, sin complicaciones. Solo tú y nosotros.</p>
+  <p class="section-desc" style="margin:0 auto" data-lang="en">No accounts, no apps, no hassle. Just you and us.</p>
+
+  <div class="how-grid" data-lang="es">
+    <div class="how-step">
+      <div class="step-num">1</div>
+      <h3>Escríbenos</h3>
+      <p>Mándanos un WhatsApp contándonos qué tipo de aventura buscas, cuántas personas son y tus fechas.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">2</div>
+      <h3>Te armamos tu plan</h3>
+      <p>Te proponemos las mejores opciones con precios reales. Pregunta lo que quieras, estamos para resolver.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">3</div>
+      <h3>¡A disfrutar!</h3>
+      <p>Confirmas, pagas seguro y listo. Nosotros nos encargamos de que todo salga perfecto.</p>
+    </div>
+  </div>
+  <div class="how-grid" data-lang="en">
+    <div class="how-step">
+      <div class="step-num">1</div>
+      <h3>Text Us</h3>
+      <p>Send us a WhatsApp message with what kind of adventure you're looking for, your group size and dates.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">2</div>
+      <h3>We Build Your Plan</h3>
+      <p>We'll send you the best options with real prices. Ask anything — we're here to help.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">3</div>
+      <h3>Enjoy!</h3>
+      <p>Confirm, pay securely, and you're set. We take care of everything so you don't have to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIAS -->
+<section class="experiences" id="experiencias">
+  <span class="section-label" data-lang="es">Experiencias</span>
+  <span class="section-label" data-lang="en">Experiences</span>
+  <h2 class="section-title" data-lang="es">Lo que puedes vivir en Cabo</h2>
+  <h2 class="section-title" data-lang="en">What you can experience in Cabo</h2>
+  <p class="section-desc" data-lang="es">Cada aventura se adapta a ti. Estos son solo algunos puntos de partida.</p>
+  <p class="section-desc" data-lang="en">Every adventure is tailored to you. These are just starting points.</p>
+
+  <!-- ES GRID -->
+  <div class="exp-grid" data-lang="es">
+    <div class="exp-card">
+      <div class="exp-visual v-boat"><span class="exp-tag">Popular</span><span class="emoji-bg">🚤</span></div>
+      <div class="exp-body">
+        <h3>Tours en Barco & Snorkel</h3>
+        <p>Recorre el Arco, nada con peces tropicales en la Playa del Amor y disfruta el mar de Cortés como nunca.</p>
+        <div class="exp-footer">
+          <span class="exp-price">Desde $1,200 <small>MXN/persona</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Me%20interesan%20los%20tours%20en%20barco%20🚤" target="_blank" class="exp-btn">Reservar →</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-visual v-adventure"><span class="exp-tag">Adrenalina</span><span class="emoji-bg">🏜️</span></div>
+      <div class="exp-body">
+        <h3>Aventura Extrema</h3>
+        <p>ATVs por el desierto, tirolesas con vista al océano, camellos al atardecer. Tú eliges el nivel de intensidad.</p>
+        <div class="exp-footer">
+          <span class="exp-price">Desde $1,500 <small>MXN/persona</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Quiero%20info%20de%20aventura%20extrema%20🏜️" target="_blank" class="exp-btn">Reservar →</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-visual v-fish"><span class="exp-tag">Clásico</span><span class="emoji-bg">🎣</span></div>
+      <div class="exp-body">
+        <h3>Pesca Deportiva</h3>
+        <p>Marlín, dorado, atún — sal en lancha privada con capitanes expertos. Desde medio día hasta jornadas completas.</p>
+        <div class="exp-footer">
+          <span class="exp-price">Desde $8,000 <small>MXN/lancha</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Me%20interesa%20la%20pesca%20deportiva%20🎣" target="_blank" class="exp-btn">Reservar →</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-visual v-food"><span class="exp-tag">Sabores</span><span class="emoji-bg">🌮</span></div>
+      <div class="exp-body">
+        <h3>Gastronomía & Nightlife</h3>
+        <p>Food tours por los mejores tacos locales, cenas en la playa, reservas en restaurantes top y la mejor fiesta de Cabo.</p>
+        <div class="exp-footer">
+          <span class="exp-price">Desde $800 <small>MXN/persona</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Quiero%20experiencias%20gastronómicas%20🌮" target="_blank" class="exp-btn">Reservar →</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-visual v-yacht"><span class="exp-tag">Premium</span><span class="emoji-bg">🛥️</span></div>
+      <div class="exp-body">
+        <h3>Renta de Yates</h3>
+        <p>Yates privados con tripulación, snacks, barra libre y todo lo que necesitas para un día inolvidable en el mar.</p>
+        <div class="exp-footer">
+          <span class="exp-price">Desde $25,000 <small>MXN/día</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Me%20interesa%20rentar%20un%20yate%20🛥️" target="_blank" class="exp-btn">Reservar →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EN GRID -->
+  <div class="exp-grid" data-lang="en">
+    <div class="exp-card">
+      <div class="exp-visual v-boat"><span class="exp-tag">Popular</span><span class="emoji-bg">🚤</span></div>
+      <div class="exp-body">
+        <h3>Boat Tours & Snorkeling</h3>
+        <p>Cruise past the Arch, swim with tropical fish at Lover's Beach and experience the Sea of Cortez like never before.</p>
+        <div class="exp-footer">
+          <span class="exp-price">From $65 <small>USD/person</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I'm%20interested%20in%20boat%20tours%20🚤" target="_blank" class="exp-btn">Book Now →</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-visual v-adventure"><span class="exp-tag">Adrenaline</span><span class="emoji-bg">🏜️</span></div>
+      <div class="exp-body">
+        <h3>Extreme Adventure</h3>
+        <p>ATVs through the desert, ziplines with ocean views, camel rides at sunset. You choose the intensity level.</p>
+        <div class="exp-footer">
+          <span class="exp-price">From $80 <small>USD/person</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I%20want%20info%20about%20adventure%20activities%20🏜️" target="_blank" class="exp-btn">Book Now →</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-visual v-fish"><span class="exp-tag">Classic</span><span class="emoji-bg">🎣</span></div>
+      <div class="exp-body">
+        <h3>Sport Fishing</h3>
+        <p>Marlin, dorado, tuna — head out on a private boat with expert captains. Half-day to full-day charters available.</p>
+        <div class="exp-footer">
+          <span class="exp-price">From $430 <small>USD/boat</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I'm%20interested%20in%20sport%20fishing%20🎣" target="_blank" class="exp-btn">Book Now →</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-visual v-food"><span class="exp-tag">Flavors</span><span class="emoji-bg">🌮</span></div>
+      <div class="exp-body">
+        <h3>Food & Nightlife</h3>
+        <p>Food tours to the best local tacos, beachfront dinners, top restaurant reservations and the best nightlife in Cabo.</p>
+        <div class="exp-footer">
+          <span class="exp-price">From $45 <small>USD/person</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I%20want%20food%20and%20nightlife%20experiences%20🌮" target="_blank" class="exp-btn">Book Now →</a>
+        </div>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-visual v-yacht"><span class="exp-tag">Premium</span><span class="emoji-bg">🛥️</span></div>
+      <div class="exp-body">
+        <h3>Yacht Rentals</h3>
+        <p>Private yachts with full crew, snacks, open bar and everything you need for an unforgettable day at sea.</p>
+        <div class="exp-footer">
+          <span class="exp-price">From $1,350 <small>USD/day</small></span>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I'm%20interested%20in%20renting%20a%20yacht%20🛥️" target="_blank" class="exp-btn">Book Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section class="about" id="nosotros">
+  <div class="about-inner">
+    <div>
+      <span class="section-label" data-lang="es">¿Por qué nosotros?</span>
+      <span class="section-label" data-lang="en">Why us?</span>
+      <h2 class="section-title" data-lang="es">No somos una app.<br>Somos personas.</h2>
+      <h2 class="section-title" data-lang="en">We're not an app.<br>We're real people.</h2>
+      <p class="section-desc" data-lang="es">Aquí no hay chatbots ni respuestas automáticas. Nos escribes y te contesta alguien que conoce Cabo como la palma de su mano.</p>
+      <p class="section-desc" data-lang="en">No chatbots, no automated replies. You text us and a real person who knows every corner of Cabo answers back.</p>
+
+      <div class="about-features" data-lang="es">
+        <div class="about-feat">
+          <div class="feat-icon">🎯</div>
+          <div class="feat-text"><h4>Precios directos</h4><p>Sin comisiones infladas de plataformas. Lo que pagas es lo justo.</p></div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">⚡</div>
+          <div class="feat-text"><h4>Respuesta rápida</h4><p>Te contestamos en minutos, no en horas. De 9AM a 5PM hora del Pacífico.</p></div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">🤝</div>
+          <div class="feat-text"><h4>Flexibilidad total</h4><p>¿Quieres combinar actividades? ¿Un plan personalizado? Nos adaptamos a ti.</p></div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">🔒</div>
+          <div class="feat-text"><h4>Pago seguro</h4><p>Transferencia, tarjeta o lo que prefieras. Todo respaldado y transparente.</p></div>
+        </div>
+      </div>
+      <div class="about-features" data-lang="en">
+        <div class="about-feat">
+          <div class="feat-icon">🎯</div>
+          <div class="feat-text"><h4>Direct Prices</h4><p>No inflated platform commissions. You pay what's fair.</p></div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">⚡</div>
+          <div class="feat-text"><h4>Fast Response</h4><p>We reply in minutes, not hours. 9AM to 5PM Pacific Time.</p></div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">🤝</div>
+          <div class="feat-text"><h4>Total Flexibility</h4><p>Want to combine activities? A custom plan? We adapt to you.</p></div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">🔒</div>
+          <div class="feat-text"><h4>Secure Payment</h4><p>Bank transfer, card, or whatever works for you. Fully backed and transparent.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="avatar">🧑‍✈️</div>
+      <h3>Tu Nombre Aquí</h3>
+      <div class="role" data-lang="es">Fundador · Cabo Vivo</div>
+      <div class="role" data-lang="en">Founder · Cabo Vivo</div>
+      <p class="quote" data-lang="es">"Vivo en Cabo y conozco cada rincón. Mi trabajo es que tu viaje sea exactamente lo que imaginaste — o mejor."</p>
+      <p class="quote" data-lang="en">"I live in Cabo and I know every corner. My job is to make your trip exactly what you imagined — or better."</p>
+      <div class="hours-badge" data-lang="es"><span class="hours-dot"></span> Disponible 9AM – 5PM Pacífico</div>
+      <div class="hours-badge" data-lang="en"><span class="hours-dot"></span> Available 9AM – 5PM Pacific</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <span class="section-label" data-lang="es">Opiniones reales</span>
+  <span class="section-label" data-lang="en">Real reviews</span>
+  <h2 class="section-title" data-lang="es">Lo que dicen quienes ya vivieron Cabo con nosotros</h2>
+  <h2 class="section-title" data-lang="en">What people who experienced Cabo with us have to say</h2>
+
+  <div class="test-grid" data-lang="es">
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"Le escribí por WhatsApp sin muchas expectativas y en 10 minutos ya tenía todo armado. El tour en barco fue increíble y el precio mucho mejor que en las apps."</p>
+      <div class="test-author">— Sarah M., California 🇺🇸</div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"Nos armó un combo de pesca + cena en la playa para el cumpleaños de mi esposo. Todo perfecto, se nota que conoce Cabo de verdad."</p>
+      <div class="test-author">— Andrea R., CDMX 🇲🇽</div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"Lo mejor es que le puedes preguntar cualquier cosa — desde dónde comer hasta qué playa está tranquila. Es como tener un amigo local."</p>
+      <div class="test-author">— James T., Texas 🇺🇸</div>
+    </div>
+  </div>
+  <div class="test-grid" data-lang="en">
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"I texted on WhatsApp not expecting much and in 10 minutes I had everything planned. The boat tour was amazing and way cheaper than the big booking apps."</p>
+      <div class="test-author">— Sarah M., California 🇺🇸</div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"He put together a fishing + beachfront dinner combo for my husband's birthday. Everything was perfect — you can tell he really knows Cabo."</p>
+      <div class="test-author">— Andrea R., Mexico City 🇲🇽</div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p>"The best part is you can ask him anything — from where to eat to which beach is chill. It's like having a local friend."</p>
+      <div class="test-author">— James T., Texas 🇺🇸</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2 data-lang="es">¿Listo para vivir Cabo<br>como se debe?</h2>
+  <h2 data-lang="en">Ready to experience Cabo<br>the right way?</h2>
+  <p data-lang="es">Escríbenos ahora y en minutos tienes tu plan armado. Sin compromiso.</p>
+  <p data-lang="en">Text us now and your plan is ready in minutes. No commitment.</p>
+  <a href="https://wa.me/521XXXXXXXXXX?text=Hola!%20Quiero%20planear%20mi%20aventura%20en%20Cabo%20🌊" target="_blank" class="cta-wa" data-lang="es">
+    <svg width="22" height="22" fill="currentColor"><use href="#wa-icon"/></svg>
+    Escríbenos por WhatsApp
+  </a>
+  <a href="https://wa.me/521XXXXXXXXXX?text=Hi!%20I%20want%20to%20plan%20my%20Cabo%20adventure%20🌊" target="_blank" class="cta-wa" data-lang="en">
+    <svg width="22" height="22" fill="currentColor"><use href="#wa-icon"/></svg>
+    Message Us on WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-hours" data-lang="es">📱 WhatsApp disponible de 9:00 AM a 5:00 PM (Hora del Pacífico)</div>
+  <div class="footer-hours" data-lang="en">📱 WhatsApp available 9:00 AM – 5:00 PM (Pacific Time)</div>
+  <p>© 2026 Cabo Vivo. <span data-lang="es">Todos los derechos reservados.</span><span data-lang="en">All rights reserved.</span> Cabo San Lucas, B.C.S., México.</p>
+</footer>
+
+<!-- LANGUAGE SWITCH SCRIPT -->
+<script>
+(function() {
+  const btns = document.querySelectorAll('[data-set-lang]');
+  
+  function setLang(lang) {
+    if (lang === 'en') {
+      document.body.classList.add('lang-en');
+    } else {
+      document.body.classList.remove('lang-en');
+    }
+    btns.forEach(b => b.classList.toggle('active', b.dataset.setLang === lang));
+    document.documentElement.lang = lang;
+    document.title = lang === 'en' 
+      ? 'Cabo Vivo — Your Adventure, Your Way'
+      : 'Cabo Vivo — Tu Aventura, a Tu Manera';
+    localStorage.setItem('cabo-lang', lang);
+  }
+
+  btns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.setLang)));
+
+  // Auto-detect or restore
+  const saved = localStorage.getItem('cabo-lang');
+  if (saved) { setLang(saved); }
+  else if (navigator.language && !navigator.language.startsWith('es')) { setLang('en'); }
+})();
+</script>
+
+</body>
+</html>
