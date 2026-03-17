@@ -396,19 +396,49 @@ section { padding:5rem 2.5rem; }
 }
 .hours-dot { width:8px; height:8px; background:#25D366; border-radius:50%; display:inline-block; }
 
-/* ===== TESTIMONIALS ===== */
-.testimonials { background:var(--white); text-align:center; }
-.test-grid {
-  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-  gap:1.5rem; max-width:1000px; margin:3rem auto 0;
+/* ===== GALLERY ===== */
+.gallery { background:var(--white); text-align:center; }
+.gallery-grid {
+  display:grid; max-width:1100px; margin:3rem auto 0; gap:1rem;
+  grid-template-columns:repeat(4, 1fr);
+  grid-template-rows:auto auto;
 }
-.test-card {
-  background:var(--sand-light); border-radius:20px; padding:2rem;
-  text-align:left; border:1px solid rgba(0,0,0,.04);
+.gallery-item {
+  border-radius:20px; overflow:hidden; position:relative;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  min-height:220px; transition:transform .35s ease, box-shadow .35s ease;
+  background-size:cover; background-position:center;
 }
-.test-stars { color:#F59E0B; font-size:1rem; margin-bottom:.75rem; letter-spacing:2px; }
-.test-card p { font-size:.92rem; color:var(--text-dark); line-height:1.65; margin-bottom:1rem; }
-.test-author { font-size:.82rem; color:var(--text-muted); font-weight:600; }
+.gallery-item:hover { transform:translateY(-4px); box-shadow:0 16px 48px rgba(0,0,0,.12); }
+/* Bento sizes */
+.gallery-item:nth-child(1) { grid-column:span 2; min-height:280px; }
+.gallery-item:nth-child(2) { grid-column:span 1; }
+.gallery-item:nth-child(3) { grid-column:span 1; }
+.gallery-item:nth-child(4) { grid-column:span 1; }
+.gallery-item:nth-child(5) { grid-column:span 1; min-height:260px; }
+.gallery-item:nth-child(6) { grid-column:span 2; min-height:260px; }
+/* Camera icon */
+.gallery-icon {
+  width:56px; height:56px; border-radius:50%;
+  background:rgba(255,255,255,.2); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:.75rem; border:1px solid rgba(255,255,255,.25);
+}
+.gallery-icon svg { width:24px; height:24px; color:rgba(255,255,255,.85); }
+.gallery-label {
+  font-size:.82rem; font-weight:600; color:var(--white);
+  background:rgba(0,0,0,.25); backdrop-filter:blur(8px);
+  padding:.35rem 1rem; border-radius:50px;
+  position:absolute; bottom:1rem; left:50%; transform:translateX(-50%);
+  white-space:nowrap;
+}
+/* Gradients per activity */
+.gi-boat { background:linear-gradient(145deg, #4FC3F7 0%, #0277BD 100%); }
+.gi-fish { background:linear-gradient(145deg, #80CBC4 0%, #00695C 100%); }
+.gi-atv { background:linear-gradient(145deg, #FFB74D 0%, #D84315 100%); }
+.gi-dinner { background:linear-gradient(145deg, #F48FB1 0%, #AD1457 100%); }
+.gi-snorkel { background:linear-gradient(145deg, #81D4FA 0%, #01579B 100%); }
+.gi-yacht { background:linear-gradient(145deg, #9FA8DA 0%, #1A237E 100%); }
 
 /* ===== CTA FINAL ===== */
 .cta-final {
@@ -446,6 +476,14 @@ footer {
 }
 footer .footer-hours { color:rgba(255,255,255,.55); margin-bottom:.5rem; font-weight:500; }
 
+/* ===== TABLET ===== */
+@media (max-width:1024px) and (min-width:769px) {
+  .gallery-grid { grid-template-columns:repeat(2, 1fr); }
+  .gallery-item:nth-child(1) { grid-column:span 2; }
+  .gallery-item:nth-child(6) { grid-column:span 2; }
+  .gallery-item:nth-child(n) { min-height:220px; }
+}
+
 /* ===== MOBILE ===== */
 @media (max-width:768px) {
   .topbar { padding:.75rem 1.25rem; }
@@ -469,6 +507,10 @@ footer .footer-hours { color:rgba(255,255,255,.55); margin-bottom:.5rem; font-we
   .hfc-yacht { bottom:0; left:20%; padding:1.1rem 1.3rem; }
   .hfc-yacht .card-emoji { font-size:2.2rem; }
   .hfc-yacht .card-info h4 { font-size:.88rem; }
+  .gallery-grid { grid-template-columns:1fr; }
+  .gallery-item, .gallery-item:nth-child(1), .gallery-item:nth-child(5), .gallery-item:nth-child(6) {
+    grid-column:span 1; min-height:200px;
+  }
   .about-inner { grid-template-columns:1fr; gap:2.5rem; }
   section { padding:3.5rem 1.5rem; }
   .exp-grid { grid-template-columns:1fr; }
@@ -867,45 +909,43 @@ footer .footer-hours { color:rgba(255,255,255,.55); margin-bottom:.5rem; font-we
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <span class="section-label" data-lang="es">Opiniones reales</span>
-  <span class="section-label" data-lang="en">Real reviews</span>
-  <h2 class="section-title" data-lang="es">Lo que dicen quienes ya vivieron Cabo con nosotros</h2>
-  <h2 class="section-title" data-lang="en">What people who experienced Cabo with us have to say</h2>
+<!-- GALLERY -->
+<section class="gallery" id="galeria">
+  <span class="section-label" data-lang="es">Galeria</span>
+  <span class="section-label" data-lang="en">Gallery</span>
+  <h2 class="section-title" data-lang="es">Asi se vive Cabo</h2>
+  <h2 class="section-title" data-lang="en">This is Cabo</h2>
 
-  <div class="test-grid" data-lang="es">
-    <div class="test-card">
-      <div class="test-stars">★★★★★</div>
-      <p>"Le escribí por WhatsApp sin muchas expectativas y en 10 minutos ya tenía todo armado. El tour en barco fue increíble y el precio mucho mejor que en las apps."</p>
-      <div class="test-author">— Sarah M., California 🇺🇸</div>
+  <div class="gallery-grid">
+    <div class="gallery-item gi-boat">
+      <div class="gallery-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <span class="gallery-label" data-lang="es">Tour en barco</span>
+      <span class="gallery-label" data-lang="en">Boat Tour</span>
     </div>
-    <div class="test-card">
-      <div class="test-stars">★★★★★</div>
-      <p>"Nos armó un combo de pesca + cena en la playa para el cumpleaños de mi esposo. Todo perfecto, se nota que conoce Cabo de verdad."</p>
-      <div class="test-author">— Andrea R., CDMX 🇲🇽</div>
+    <div class="gallery-item gi-fish">
+      <div class="gallery-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <span class="gallery-label" data-lang="es">Pesca deportiva</span>
+      <span class="gallery-label" data-lang="en">Sport Fishing</span>
     </div>
-    <div class="test-card">
-      <div class="test-stars">★★★★★</div>
-      <p>"Lo mejor es que le puedes preguntar cualquier cosa — desde dónde comer hasta qué playa está tranquila. Es como tener un amigo local."</p>
-      <div class="test-author">— James T., Texas 🇺🇸</div>
+    <div class="gallery-item gi-atv">
+      <div class="gallery-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <span class="gallery-label" data-lang="es">Aventura en ATV</span>
+      <span class="gallery-label" data-lang="en">ATV Adventure</span>
     </div>
-  </div>
-  <div class="test-grid" data-lang="en">
-    <div class="test-card">
-      <div class="test-stars">★★★★★</div>
-      <p>"I texted on WhatsApp not expecting much and in 10 minutes I had everything planned. The boat tour was amazing and way cheaper than the big booking apps."</p>
-      <div class="test-author">— Sarah M., California 🇺🇸</div>
+    <div class="gallery-item gi-dinner">
+      <div class="gallery-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <span class="gallery-label" data-lang="es">Cena en la playa</span>
+      <span class="gallery-label" data-lang="en">Beach Dinner</span>
     </div>
-    <div class="test-card">
-      <div class="test-stars">★★★★★</div>
-      <p>"He put together a fishing + beachfront dinner combo for my husband's birthday. Everything was perfect — you can tell he really knows Cabo."</p>
-      <div class="test-author">— Andrea R., Mexico City 🇲🇽</div>
+    <div class="gallery-item gi-snorkel">
+      <div class="gallery-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <span class="gallery-label" data-lang="es">Snorkel</span>
+      <span class="gallery-label" data-lang="en">Snorkeling</span>
     </div>
-    <div class="test-card">
-      <div class="test-stars">★★★★★</div>
-      <p>"The best part is you can ask him anything — from where to eat to which beach is chill. It's like having a local friend."</p>
-      <div class="test-author">— James T., Texas 🇺🇸</div>
+    <div class="gallery-item gi-yacht">
+      <div class="gallery-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <span class="gallery-label" data-lang="es">Renta de yate</span>
+      <span class="gallery-label" data-lang="en">Yacht Rental</span>
     </div>
   </div>
 </section>
