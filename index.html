@@ -32,9 +32,8 @@ body {
 }
 
 /* ===== LANG SYSTEM ===== */
-[data-lang="en"] { display: none; }
-body.lang-en [data-lang="en"] { display: revert; }
-body.lang-en [data-lang="es"] { display: none; }
+body:not(.lang-en) [data-lang="en"] { display: none !important; }
+body.lang-en [data-lang="es"] { display: none !important; }
 
 /* ===== ANIMATIONS ===== */
 @keyframes fadeUp {
@@ -142,50 +141,100 @@ body.lang-en [data-lang="es"] { display: none; }
 .hero-content { max-width:720px; position:relative; z-index:3; }
 
 /* FLOATING CARDS */
-@keyframes floatCard1 { 0%,100%{transform:translate(0,0) rotate(-3deg)} 50%{transform:translate(8px,-18px) rotate(1deg)} }
-@keyframes floatCard2 { 0%,100%{transform:translate(0,0) rotate(2deg)} 50%{transform:translate(-10px,-14px) rotate(-2deg)} }
-@keyframes floatCard3 { 0%,100%{transform:translate(0,0) rotate(-1deg)} 50%{transform:translate(12px,-20px) rotate(3deg)} }
-@keyframes floatCard4 { 0%,100%{transform:translate(0,0) rotate(3deg)} 50%{transform:translate(-8px,-16px) rotate(-1deg)} }
-@keyframes floatCard5 { 0%,100%{transform:translate(0,0) rotate(-2deg)} 50%{transform:translate(6px,-12px) rotate(2deg)} }
+@keyframes floatCard1 { 0%,100%{transform:translate(0,0) rotate(-4deg)} 50%{transform:translate(10px,-22px) rotate(2deg)} }
+@keyframes floatCard2 { 0%,100%{transform:translate(0,0) rotate(3deg)} 50%{transform:translate(-14px,-12px) rotate(-3deg)} }
+@keyframes floatCard3 { 0%,100%{transform:translate(0,0) rotate(-2deg)} 50%{transform:translate(8px,-26px) rotate(4deg)} }
+@keyframes floatCard4 { 0%,100%{transform:translate(0,0) rotate(5deg)} 50%{transform:translate(-10px,-18px) rotate(-1deg)} }
+@keyframes floatCard5 { 0%,100%{transform:translate(0,0) rotate(-3deg)} 50%{transform:translate(12px,-15px) rotate(3deg)} }
 
 .hero-cards {
-  position:relative; width:100%; height:480px; z-index:3;
+  position:relative; width:100%; height:520px; z-index:3;
 }
 .hero-float-card {
-  position:absolute; display:flex; align-items:center; gap:.75rem;
-  background:var(--white); border-radius:18px; padding:1rem 1.25rem;
-  box-shadow:0 8px 32px rgba(0,0,0,.08); border:1px solid rgba(0,0,0,.05);
-  transition:transform .3s ease, box-shadow .3s ease;
-  cursor:default; white-space:nowrap;
+  position:absolute; display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  border-radius:22px; padding:1.25rem 1.5rem;
+  transition:transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s ease;
+  cursor:default; text-align:center;
 }
 .hero-float-card:hover {
-  transform:scale(1.07)!important; box-shadow:0 14px 44px rgba(0,0,0,.13);
+  transform:scale(1.1) rotate(0deg)!important;
+  z-index:10;
 }
 .hero-float-card .card-emoji {
-  font-size:2.2rem; line-height:1;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.1));
+  line-height:1;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.15));
 }
 .hero-float-card .card-info h4 {
-  font-size:.92rem; font-weight:700; color:var(--night); margin-bottom:.15rem;
+  font-weight:700; color:var(--night); margin-bottom:.1rem;
 }
 .hero-float-card .card-info span {
-  font-size:.75rem; color:var(--text-muted); font-weight:500;
+  font-size:.7rem; font-weight:500; opacity:.7;
 }
 .hero-float-card .card-badge {
-  font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
-  padding:.2rem .6rem; border-radius:50px; margin-left:auto;
+  font-size:.6rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em;
+  padding:.2rem .65rem; border-radius:50px; background:rgba(255,255,255,.55);
+  backdrop-filter:blur(4px);
 }
 
-.hfc-boat { top:5%; left:10%; animation:floatCard1 6s ease-in-out infinite; }
-.hfc-boat .card-badge { background:#E3F2FD; color:var(--ocean); }
-.hfc-adventure { top:22%; right:5%; animation:floatCard2 7s ease-in-out infinite .5s; }
-.hfc-adventure .card-badge { background:#FFF3E0; color:#E65100; }
-.hfc-fish { top:44%; left:5%; animation:floatCard3 5.5s ease-in-out infinite 1s; }
-.hfc-fish .card-badge { background:#E0F2F1; color:#00695C; }
-.hfc-food { top:62%; right:10%; animation:floatCard4 6.5s ease-in-out infinite 1.5s; }
-.hfc-food .card-badge { background:#FCE4EC; color:#C62828; }
-.hfc-yacht { top:80%; left:15%; animation:floatCard5 7.5s ease-in-out infinite 2s; }
-.hfc-yacht .card-badge { background:#E8EAF6; color:#283593; }
+/* BOAT — large hero card, top-right */
+.hfc-boat {
+  top:2%; right:0; padding:1.75rem 2rem;
+  background:linear-gradient(145deg, #4FC3F7, #0288D1);
+  box-shadow:0 14px 48px rgba(2,136,209,.35), 0 4px 12px rgba(0,0,0,.08);
+  animation:floatCard1 7s ease-in-out infinite;
+}
+.hfc-boat .card-emoji { font-size:3rem; }
+.hfc-boat .card-info h4 { font-size:1.05rem; color:var(--white); }
+.hfc-boat .card-info span { color:rgba(255,255,255,.8); }
+.hfc-boat .card-badge { color:#01579B; }
+
+/* ADVENTURE — medium, left-center */
+.hfc-adventure {
+  top:8%; left:0; padding:1.2rem 1.4rem;
+  background:linear-gradient(145deg, #FFB74D, #E65100);
+  box-shadow:0 12px 40px rgba(230,81,0,.3), 0 4px 12px rgba(0,0,0,.06);
+  animation:floatCard2 6s ease-in-out infinite .8s;
+}
+.hfc-adventure .card-emoji { font-size:2.4rem; }
+.hfc-adventure .card-info h4 { font-size:.9rem; color:var(--white); }
+.hfc-adventure .card-info span { color:rgba(255,255,255,.75); }
+.hfc-adventure .card-badge { color:#BF360C; }
+
+/* FISH — large, center-left */
+.hfc-fish {
+  top:40%; left:8%; padding:1.5rem 1.75rem;
+  background:linear-gradient(145deg, #80CBC4, #00796B);
+  box-shadow:0 16px 52px rgba(0,121,107,.35), 0 4px 14px rgba(0,0,0,.08);
+  animation:floatCard3 5.5s ease-in-out infinite 1.5s;
+}
+.hfc-fish .card-emoji { font-size:2.8rem; }
+.hfc-fish .card-info h4 { font-size:1rem; color:var(--white); }
+.hfc-fish .card-info span { color:rgba(255,255,255,.75); }
+.hfc-fish .card-badge { color:#004D40; }
+
+/* FOOD — small, right-center */
+.hfc-food {
+  top:38%; right:5%; padding:1rem 1.2rem;
+  background:linear-gradient(145deg, #F48FB1, #C62828);
+  box-shadow:0 10px 36px rgba(198,40,40,.3), 0 4px 10px rgba(0,0,0,.06);
+  animation:floatCard4 6.5s ease-in-out infinite 2s;
+}
+.hfc-food .card-emoji { font-size:2rem; }
+.hfc-food .card-info h4 { font-size:.82rem; color:var(--white); }
+.hfc-food .card-info span { color:rgba(255,255,255,.75); font-size:.65rem; }
+.hfc-food .card-badge { color:#880E4F; }
+
+/* YACHT — large premium, bottom-center */
+.hfc-yacht {
+  bottom:2%; left:15%; padding:1.6rem 2rem;
+  background:linear-gradient(145deg, #9FA8DA, #1A237E);
+  box-shadow:0 18px 56px rgba(26,35,126,.35), 0 6px 16px rgba(0,0,0,.1);
+  animation:floatCard5 8s ease-in-out infinite 0.3s;
+}
+.hfc-yacht .card-emoji { font-size:3.2rem; }
+.hfc-yacht .card-info h4 { font-size:1.1rem; color:var(--white); }
+.hfc-yacht .card-info span { color:rgba(255,255,255,.75); }
+.hfc-yacht .card-badge { color:#1A237E; }
 .hero-tag {
   display:inline-flex; align-items:center; gap:.5rem;
   background:var(--white); border:1px solid rgba(0,0,0,.08); border-radius:50px;
@@ -403,16 +452,23 @@ footer .footer-hours { color:rgba(255,255,255,.55); margin-bottom:.5rem; font-we
   .topbar-links a:not(.topbar-wa) { display:none; }
   .hero { padding:7rem 1.5rem 4rem; }
   .hero-inner { grid-template-columns:1fr; gap:2rem; }
-  .hero-cards { height:340px; margin-top:1rem; }
-  .hero-float-card { padding:.75rem 1rem; }
-  .hero-float-card .card-emoji { font-size:1.6rem; }
-  .hero-float-card .card-info h4 { font-size:.8rem; }
-  .hero-float-card .card-info span { font-size:.68rem; }
-  .hfc-boat { top:0; left:5%; }
-  .hfc-adventure { top:18%; right:2%; }
-  .hfc-fish { top:38%; left:0; }
-  .hfc-food { top:58%; right:5%; }
-  .hfc-yacht { top:78%; left:8%; }
+  .hero-cards { height:380px; margin-top:1rem; }
+  .hero-float-card { padding:.85rem 1rem; }
+  .hfc-boat { top:0; right:auto; left:35%; padding:1.1rem 1.3rem; }
+  .hfc-boat .card-emoji { font-size:2.2rem; }
+  .hfc-boat .card-info h4 { font-size:.88rem; }
+  .hfc-adventure { top:2%; left:0; padding:1rem 1.1rem; }
+  .hfc-adventure .card-emoji { font-size:1.8rem; }
+  .hfc-adventure .card-info h4 { font-size:.78rem; }
+  .hfc-fish { top:38%; left:5%; padding:1.1rem 1.2rem; }
+  .hfc-fish .card-emoji { font-size:2rem; }
+  .hfc-fish .card-info h4 { font-size:.85rem; }
+  .hfc-food { top:35%; right:3%; padding:.85rem 1rem; }
+  .hfc-food .card-emoji { font-size:1.5rem; }
+  .hfc-food .card-info h4 { font-size:.75rem; }
+  .hfc-yacht { bottom:0; left:20%; padding:1.1rem 1.3rem; }
+  .hfc-yacht .card-emoji { font-size:2.2rem; }
+  .hfc-yacht .card-info h4 { font-size:.88rem; }
   .about-inner { grid-template-columns:1fr; gap:2.5rem; }
   section { padding:3.5rem 1.5rem; }
   .exp-grid { grid-template-columns:1fr; }
