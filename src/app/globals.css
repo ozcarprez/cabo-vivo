@@ -610,7 +610,7 @@ a.exp-card { text-decoration:none; color:inherit; display:block; }
   .gallery-item:nth-child(1) { grid-column:span 2; }
   .gallery-item:nth-child(6) { grid-column:span 2; }
   .gallery-item:nth-child(n) { min-height:220px; }
-  .polaroid { transform:scale(.65) !important; transform-origin:center; }
+  .polaroid { scale:.65; }
 }
 
 /* ===== MOBILE LANDSCAPE ===== */
@@ -618,7 +618,8 @@ a.exp-card { text-decoration:none; color:inherit; display:block; }
   .hero { height:100vh; }
   .hero-center { padding:1rem; }
   .hero h1 { font-size:2rem; margin-bottom:1rem; }
-  .polaroid { transform:scale(.38) !important; transform-origin:center; }
+  .polaroid { scale:.38; }
+  .polaroid:nth-child(n+11) { display:none; }
 }
 
 /* ===== MOBILE ===== */
@@ -628,8 +629,9 @@ a.exp-card { text-decoration:none; color:inherit; display:block; }
   .hero { height:100vh; max-height:100vh; }
   .hero-center { padding:1.5rem; }
   .hero h1 { font-size:clamp(2rem,9vw,3rem); }
-  /* Scale down polaroids to fit mobile screen */
-  .polaroid { transform:scale(.42) !important; transform-origin:center; }
+  /* Scale polaroids while keeping rotation intact */
+  .polaroid { scale:.42; }
+  .polaroid:nth-child(n+13) { display:none; }
   .gallery-grid { grid-template-columns:1fr; }
   .gallery-item, .gallery-item:nth-child(1), .gallery-item:nth-child(5), .gallery-item:nth-child(6) {
     grid-column:span 1; min-height:200px;
