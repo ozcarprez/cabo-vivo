@@ -140,9 +140,10 @@ export default function Home() {
           const row = Math.floor(i / cols);
           const baseLeft = (col / cols) * 100;
           const baseTop = (row / rows) * 100;
-          // Seeded pseudo-random offsets based on index
+          // Varied rotations: alternating directions, organic feel
+          const rotations = [-12, 5, -3, 10, 1, -8, 14, -1, 7, -14, 3, -6, 11, -9, 2, -5, 13, -11, 8, -2, 6, -13, 4, -7, 9, -4, 12, -10, 0, 15];
+          const rotate = rotations[i % rotations.length];
           const seed = (i * 7 + 3) % 17;
-          const rotate = ((seed % 31) - 15);
           const offsetX = ((seed * 3) % 11) - 5;
           const offsetY = ((seed * 5) % 9) - 4;
           const size = 180 + ((seed * 2) % 7) * 15;
@@ -165,6 +166,7 @@ export default function Home() {
           );
         })}
         <div className="hero-overlay" />
+        <div className="hero-top-gradient" />
 
         {/* Title & CTA */}
         <div className="hero-center">

@@ -68,21 +68,21 @@ body {
   transition: background .4s ease, border-color .4s ease, box-shadow .4s ease;
 }
 
-/* Transparent (at top) — light bg hero */
+/* Transparent (at top) — over dark gradient */
 .topbar-transparent {
   background: transparent; border-bottom: 1px solid transparent;
 }
-.topbar-transparent .logo { color: var(--night); }
-.topbar-transparent .logo span { color: var(--fire); }
-.topbar-transparent .topbar-links a { color: var(--text-muted); }
-.topbar-transparent .topbar-links a:hover { color: var(--fire); }
-.topbar-transparent .lang-switch { background: rgba(0,0,0,.05); }
-.topbar-transparent .lang-btn { color: var(--text-muted); }
+.topbar-transparent .logo { color: var(--white); }
+.topbar-transparent .logo span { color: var(--fire-light); }
+.topbar-transparent .topbar-links a { color: rgba(255,255,255,.85); }
+.topbar-transparent .topbar-links a:hover { color: var(--white); }
+.topbar-transparent .lang-switch { background: rgba(255,255,255,.15); }
+.topbar-transparent .lang-btn { color: rgba(255,255,255,.7); }
 .topbar-transparent .lang-btn.active {
-  background: var(--white); color: var(--night);
-  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+  background: rgba(255,255,255,.25); color: var(--white);
+  box-shadow: none;
 }
-.topbar-transparent .lang-btn:hover:not(.active) { color: var(--night); }
+.topbar-transparent .lang-btn:hover:not(.active) { color: var(--white); }
 
 /* Solid (scrolled) */
 .topbar-solid {
@@ -143,6 +143,12 @@ body {
 .hero-overlay {
   position:absolute; inset:0; z-index:5;
   background:rgba(0,0,0,.35);
+  pointer-events:none;
+}
+/* Top gradient for navbar readability */
+.hero-top-gradient {
+  position:absolute; top:0; left:0; right:0; height:120px; z-index:6;
+  background:linear-gradient(180deg, rgba(0,0,0,.5) 0%, transparent 100%);
   pointer-events:none;
 }
 
