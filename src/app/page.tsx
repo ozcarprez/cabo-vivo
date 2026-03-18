@@ -80,7 +80,13 @@ export default function Home() {
       return !EXCLUDED_HERO.some((ex) => a.image_url!.includes(ex));
     })
     .map((a) => a.image_url as string);
-  const allHeroPhotos = [...localPhotos, ...supabasePhotos];
+  // Interleave local and Supabase photos so mobile shows both
+  const allHeroPhotos: string[] = [];
+  const maxLen = Math.max(localPhotos.length, supabasePhotos.length);
+  for (let i = 0; i < maxLen; i++) {
+    if (i < localPhotos.length) allHeroPhotos.push(localPhotos[i]);
+    if (i < supabasePhotos.length) allHeroPhotos.push(supabasePhotos[i]);
+  }
 
   return (
     <>

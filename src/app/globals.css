@@ -631,7 +631,7 @@ a.exp-card { text-decoration:none; color:inherit; display:block; }
   .hero h1 { font-size:clamp(2rem,9vw,3rem); }
   /* Scale polaroids while keeping rotation intact */
   .polaroid { scale:.42; }
-  .polaroid:nth-child(n+13) { display:none; }
+  .polaroid:nth-child(n+16) { display:none; }
   .gallery-grid { grid-template-columns:1fr; }
   .gallery-item, .gallery-item:nth-child(1), .gallery-item:nth-child(5), .gallery-item:nth-child(6) {
     grid-column:span 1; min-height:200px;
