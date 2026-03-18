@@ -145,29 +145,6 @@ export default function Home() {
             <WaIcon size={20} />
             {t("Planea tu aventura", "Plan Your Adventure")}
           </a>
-
-          <div className="hero-trust fade-up fade-up-d4">
-            <div className="trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-              {t("Pago seguro", "Secure payment")}
-            </div>
-            <div className="trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 6v6l4 2" />
-              </svg>
-              {t("Respuesta en minutos", "Reply in minutes")}
-            </div>
-            <div className="trust-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              {t("Trato personal", "Personal service")}
-            </div>
-          </div>
         </div>
       </section>
 
