@@ -140,7 +140,7 @@ export default function Home() {
         {/* Photo grid background */}
         <div className="hero-grid">
           {allHeroPhotos.map((src, i) => {
-            const rotations = [-12, 5, -3, 10, 1, -8, 14, -1, 7, -11, 3, -6, 9, -4, 2, -9, 13, -7, 8, -2, 6, -10, 4, -5, 11, -3, 12, -8, 0, 14];
+            const rotations = [-8, 4, -2, 7, 1, -5, 10, -1, 5, -7, 2, -4, 6, -3, 2, -6, 9, -5, 6, -2, 4, -7, 3, -4, 8, -2, 9, -6, 0, 10];
             const rotate = rotations[i % rotations.length];
             return (
               <div
