@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useLang } from "@/context/LangContext";
 import { supabase } from "@/lib/supabase";
 import WaIcon from "@/components/WaIcon";
@@ -293,7 +294,7 @@ export default function Home() {
                 : `Hi! I'm interested in: ${act.name_en}`;
 
               return (
-                <div className="exp-card" key={act.id}>
+                <Link href={`/activity/${act.id}`} className="exp-card" key={act.id}>
                   <div
                     className={`exp-visual ${act.image_url ? "has-image" : ""} v-${act.category}`}
                     style={act.image_url ? { backgroundImage: `url(${act.image_url})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
@@ -310,16 +311,12 @@ export default function Home() {
                       <span className="exp-price">
                         ${act.price_usd} <small>USD</small>
                       </span>
-                      <a
-                        href={`${WA_BASE}?text=${encodeURIComponent(waMsg)}`}
-                        target="_blank"
-                        className="exp-btn"
-                      >
-                        {t("Reservar", "Book Now")} &rarr;
-                      </a>
+                      <span className="exp-btn">
+                        {t("Ver detalles", "View Details")} &rarr;
+                      </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
         </div>
