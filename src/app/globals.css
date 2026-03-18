@@ -141,13 +141,12 @@ body {
 
 /* Photo grid as background */
 .hero-grid {
-  position:absolute; inset:-30px;
+  position:absolute;
+  top:-30px; left:-30px; right:-30px; bottom:-30px;
   display:grid;
   grid-template-columns:repeat(6, 1fr);
   grid-template-rows:repeat(5, 1fr);
   gap:0;
-  width:calc(100% + 60px);
-  height:calc(100% + 60px);
 }
 .grid-cell {
   position:relative;
