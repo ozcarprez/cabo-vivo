@@ -172,9 +172,9 @@ export default function Home() {
         <div className="hero-center">
           <h1 className="fade-up fade-up-d1">
             {lang === "es" ? (
-              <>Tu aventura en Cabo,<br /><em>a tu manera.</em></>
+              <>Vive Cabo,<br /><em>crea recuerdos.</em></>
             ) : (
-              <>Your Cabo adventure,<br /><em>your way.</em></>
+              <>Live Cabo,<br /><em>create memories.</em></>
             )}
           </h1>
           <a href="#experiencias" className="hero-cta fade-up fade-up-d2">
