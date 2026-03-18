@@ -134,51 +134,53 @@ body {
 
 /* ===== HERO ===== */
 .hero {
-  height:100vh; max-height:100vh; display:flex; align-items:center; justify-content:center;
+  height:100vh; display:flex; align-items:center; justify-content:center;
   position:relative; overflow:hidden;
-  background:#FFF8F0;
+  background:var(--night);
 }
 
-/* Dark overlay for legibility */
+/* Photo grid as background */
+.hero-grid {
+  position:absolute; inset:0;
+  display:grid;
+  grid-template-columns:repeat(6, 1fr);
+  grid-auto-rows:1fr;
+  grid-auto-flow:dense;
+  gap:3px;
+}
+.grid-cell {
+  overflow:hidden; min-height:0;
+}
+.grid-cell img {
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.grid-wide { grid-column:span 2; }
+.grid-tall { grid-row:span 2; }
+
+/* Dark overlay */
 .hero-overlay {
-  position:absolute; inset:0; z-index:5;
-  background:rgba(0,0,0,.35);
+  position:absolute; inset:0; z-index:2;
+  background:rgba(0,0,0,.4);
   pointer-events:none;
 }
-/* Top gradient for navbar readability */
+/* Top gradient for navbar */
 .hero-top-gradient {
-  position:absolute; top:0; left:0; right:0; height:120px; z-index:6;
-  background:linear-gradient(180deg, rgba(0,0,0,.5) 0%, transparent 100%);
+  position:absolute; top:0; left:0; right:0; height:100px; z-index:3;
+  background:linear-gradient(180deg, rgba(0,0,0,.4) 0%, transparent 100%);
   pointer-events:none;
 }
 
-/* Polaroids */
-.polaroid {
-  position:absolute; background:var(--white);
-  padding:6px; border-radius:3px;
-  box-shadow:0 4px 20px rgba(0,0,0,.18), 0 1px 6px rgba(0,0,0,.08);
-  transition:transform .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s ease;
-}
-.polaroid:hover {
-  z-index:20 !important;
-  transform:scale(1.15) rotate(0deg) !important;
-  box-shadow:0 20px 56px rgba(0,0,0,.28);
-}
-.polaroid img {
-  width:100%; height:100%; object-fit:cover; display:block; border-radius:2px;
-}
-
-/* Center content — no container */
+/* Centered text */
 .hero-center {
-  position:relative; z-index:10; text-align:center;
+  position:relative; z-index:5; text-align:center;
   padding:2rem;
 }
 
 .hero h1 {
   font-family:var(--font-playfair),'Playfair Display',serif;
-  font-size:clamp(2.8rem,7vw,5rem); line-height:1.1;
+  font-size:clamp(3rem,8vw,5.5rem); line-height:1.08;
   color:var(--white); margin-bottom:2rem;
-  text-shadow:0 3px 24px rgba(0,0,0,.6), 0 1px 4px rgba(0,0,0,.5);
+  text-shadow:0 4px 32px rgba(0,0,0,.7), 0 1px 6px rgba(0,0,0,.5);
 }
 .hero h1 em {
   color:var(--fire-light); font-style:italic;
@@ -190,7 +192,6 @@ body {
   padding:1.1rem 3rem; border-radius:60px; font-weight:700; font-size:1.15rem;
   transition:all .3s ease;
   box-shadow:0 6px 28px rgba(232,85,45,.4);
-  text-shadow:none;
 }
 .hero-cta:hover {
   background:var(--fire-light); transform:translateY(-2px);
@@ -610,28 +611,16 @@ a.exp-card { text-decoration:none; color:inherit; display:block; }
   .gallery-item:nth-child(1) { grid-column:span 2; }
   .gallery-item:nth-child(6) { grid-column:span 2; }
   .gallery-item:nth-child(n) { min-height:220px; }
-  .polaroid { scale:.65; }
-}
-
-/* ===== MOBILE LANDSCAPE ===== */
-@media (max-height:500px) and (orientation:landscape) {
-  .hero { height:100vh; }
-  .hero-center { padding:1rem; }
-  .hero h1 { font-size:2rem; margin-bottom:1rem; }
-  .polaroid { scale:.38; }
-  .polaroid:nth-child(n+11) { display:none; }
+  .hero-grid { grid-template-columns:repeat(4, 1fr); }
 }
 
 /* ===== MOBILE ===== */
 @media (max-width:768px) {
   .topbar { padding:.75rem 1.25rem; }
   .topbar-links a:not(.topbar-wa) { display:none; }
-  .hero { height:100vh; max-height:100vh; }
+  .hero-grid { grid-template-columns:repeat(3, 1fr); }
   .hero-center { padding:1.5rem; }
-  .hero h1 { font-size:clamp(2rem,9vw,3rem); }
-  /* Scale polaroids while keeping rotation intact */
-  .polaroid { scale:.42; }
-  .polaroid:nth-child(n+16) { display:none; }
+  .hero h1 { font-size:clamp(2.2rem,10vw,3.2rem); }
   .gallery-grid { grid-template-columns:1fr; }
   .gallery-item, .gallery-item:nth-child(1), .gallery-item:nth-child(5), .gallery-item:nth-child(6) {
     grid-column:span 1; min-height:200px;
