@@ -87,11 +87,11 @@ export default function Home() {
     if (i < localPhotos.length) basePhotos.push(localPhotos[i]);
     if (i < supabasePhotos.length) basePhotos.push(supabasePhotos[i]);
   }
-  // Repeat photos so the grid fills the entire hero (7 cols × ~7 rows = 49 min)
-  const MIN_CELLS = 56;
+  // Repeat photos to fill exactly 6 cols × 5 rows = 30 cells
+  const GRID_CELLS = 30;
   const allHeroPhotos: string[] = [];
-  while (allHeroPhotos.length < MIN_CELLS) {
-    allHeroPhotos.push(...basePhotos);
+  for (let i = 0; i < GRID_CELLS; i++) {
+    allHeroPhotos.push(basePhotos[i % basePhotos.length]);
   }
 
   return (
