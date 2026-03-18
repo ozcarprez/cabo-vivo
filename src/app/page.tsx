@@ -43,6 +43,7 @@ export default function Home() {
   const { lang, setLang, t } = useLang();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [filter, setFilter] = useState("all");
+  const [heroIndex, setHeroIndex] = useState(0);
 
   useEffect(() => {
     supabase
@@ -55,6 +56,18 @@ export default function Home() {
         if (data) setActivities(data);
       });
   }, []);
+
+  const heroImages = activities
+    .filter((a) => a.image_url)
+    .map((a) => a.image_url as string);
+
+  useEffect(() => {
+    if (heroImages.length === 0) return;
+    const interval = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
   return (
     <>
@@ -105,107 +118,69 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero">
-        <div className="hero-blob" />
-        <div className="hero-blob2" />
-        <div className="hero-inner">
-          <div className="hero-content">
-            <h1 className="fade-up fade-up-d1">
-              {lang === "es" ? (
-                <>
-                  Tu aventura en Cabo,
-                  <br />
-                  <em>a tu manera.</em>
-                </>
-              ) : (
-                <>
-                  Your Cabo adventure,
-                  <br />
-                  <em>your way.</em>
-                </>
-              )}
-            </h1>
+        {/* Carousel backgrounds */}
+        {heroImages.map((url, i) => (
+          <div
+            key={url}
+            className={`hero-slide ${i === heroIndex ? "active" : ""}`}
+            style={{ backgroundImage: `url(${url})` }}
+          />
+        ))}
+        <div className="hero-overlay" />
 
-            <p className="hero-desc fade-up fade-up-d2">
-              {t(
-                "Nada de formularios eternos ni apps genericas. Platicanos que quieres vivir y nosotros lo hacemos realidad. Trato directo, sin intermediarios.",
-                "No endless forms or generic apps. Tell us what you want to experience and we'll make it happen. Direct service, no middlemen."
-              )}
-            </p>
+        <div className="hero-center">
+          <h1 className="fade-up fade-up-d1">
+            {lang === "es" ? (
+              <>
+                Tu aventura en Cabo,
+                <br />
+                <em>a tu manera.</em>
+              </>
+            ) : (
+              <>
+                Your Cabo adventure,
+                <br />
+                <em>your way.</em>
+              </>
+            )}
+          </h1>
 
-            <a
-              href={`${WA_BASE}?text=${encodeURIComponent(t("Hola! Quiero planear mi aventura en Cabo", "Hi! I want to plan my Cabo adventure"))}`}
-              target="_blank"
-              className="hero-cta fade-up fade-up-d3"
-            >
-              <WaIcon size={20} />
-              {t("Planea tu aventura", "Plan Your Adventure")}
-            </a>
+          <p className="hero-desc fade-up fade-up-d2">
+            {t(
+              "Nada de formularios eternos ni apps genericas. Platicanos que quieres vivir y nosotros lo hacemos realidad. Trato directo, sin intermediarios.",
+              "No endless forms or generic apps. Tell us what you want to experience and we'll make it happen. Direct service, no middlemen."
+            )}
+          </p>
 
-            <div className="hero-trust fade-up fade-up-d4">
-              <div className="trust-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-                {t("Pago seguro", "Secure payment")}
-              </div>
-              <div className="trust-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 6v6l4 2" />
-                </svg>
-                {t("Respuesta en minutos", "Reply in minutes")}
-              </div>
-              <div className="trust-item">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-                {t("Trato personal", "Personal service")}
-              </div>
-            </div>
-          </div>
+          <a
+            href={`${WA_BASE}?text=${encodeURIComponent(t("Hola! Quiero planear mi aventura en Cabo", "Hi! I want to plan my Cabo adventure"))}`}
+            target="_blank"
+            className="hero-cta fade-up fade-up-d3"
+          >
+            <WaIcon size={20} />
+            {t("Planea tu aventura", "Plan Your Adventure")}
+          </a>
 
-          {/* FLOATING ACTIVITY CARDS */}
-          <div className="hero-cards fade-up fade-up-d2">
-            <div className="hero-float-card hfc-boat">
-              <span className="card-emoji">🚤</span>
-              <div className="card-info">
-                <h4>{t("Tours en Barco", "Boat Tours")}</h4>
-                <span>{t("Snorkel · Arco · Playa del Amor", "Snorkel · Arch · Lover's Beach")}</span>
-              </div>
-              <span className="card-badge">{t("Popular", "Popular")}</span>
+          <div className="hero-trust fade-up fade-up-d4">
+            <div className="trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              {t("Pago seguro", "Secure payment")}
             </div>
-            <div className="hero-float-card hfc-adventure">
-              <span className="card-emoji">🏜️</span>
-              <div className="card-info">
-                <h4>{t("Aventura Extrema", "Extreme Adventure")}</h4>
-                <span>{t("ATVs · Tirolesas · Camellos", "ATVs · Ziplines · Camels")}</span>
-              </div>
-              <span className="card-badge">{t("Adrenalina", "Adrenaline")}</span>
+            <div className="trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+              </svg>
+              {t("Respuesta en minutos", "Reply in minutes")}
             </div>
-            <div className="hero-float-card hfc-fish">
-              <span className="card-emoji">🎣</span>
-              <div className="card-info">
-                <h4>{t("Pesca Deportiva", "Sport Fishing")}</h4>
-                <span>{t("Marlin · Dorado · Atun", "Marlin · Dorado · Tuna")}</span>
-              </div>
-              <span className="card-badge">{t("Clasico", "Classic")}</span>
-            </div>
-            <div className="hero-float-card hfc-food">
-              <span className="card-emoji">🌮</span>
-              <div className="card-info">
-                <h4>{t("Gastronomia", "Food & Nightlife")}</h4>
-                <span>{t("Tacos · Cenas · Nightlife", "Tacos · Dinners · Nightlife")}</span>
-              </div>
-              <span className="card-badge">{t("Sabores", "Flavors")}</span>
-            </div>
-            <div className="hero-float-card hfc-yacht">
-              <span className="card-emoji">🛥️</span>
-              <div className="card-info">
-                <h4>{t("Renta de Yates", "Yacht Rentals")}</h4>
-                <span>{t("Privados · Tripulacion · Barra libre", "Private · Full Crew · Open Bar")}</span>
-              </div>
-              <span className="card-badge">{t("Premium", "Premium")}</span>
+            <div className="trust-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              {t("Trato personal", "Personal service")}
             </div>
           </div>
         </div>
