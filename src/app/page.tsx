@@ -113,26 +113,15 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero">
-        {/* Background polaroids */}
-        {[
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/Parasailing-image-1.jpg", label: "Parasailing", cls: "bp-1" },
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Cabo-Escape-Sunset.jpg", label: t("Atardecer", "Sunset"), cls: "bp-2" },
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Snorkel-Fun-Lunch-image-1.jpg", label: "Snorkel", cls: "bp-3" },
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/MARINE-SAFARI-in-Cabo-San-Lucas-image-1.jpg", label: "Safari Marino", cls: "bp-4" },
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Kraken-Chase-Whale-Watching-Tour-image-1.jpg", label: t("Ballenas", "Whales"), cls: "bp-5" },
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/0-Buccaneer-barco1.jpg", label: t("Barco Pirata", "Pirate Ship"), cls: "bp-6" },
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/Roots-of-Baja-Magical-Town-Tour-in-Todos-Santos-image-1.jpg", label: "Todos Santos", cls: "bp-7" },
-          { src: "https://www.costaazulziplines.com/assets/images/caz-7-large-816x546.webp", label: t("Tirolesas", "Ziplines"), cls: "bp-8" },
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/12/Actual_sunset_sails12.jpg", label: t("Velero", "Sailboat"), cls: "bp-9" },
-          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2019/05/348406c9-9d3c-4b0e-a128-43ef220229a2.jpg", label: "Paddle Board", cls: "bp-10" },
-        ].map((p) => (
-          <div key={p.cls} className={`polaroid ${p.cls}`}>
-            <img src={p.src} alt={p.label} />
-            <span className="pol-caption">{p.label}</span>
+        {/* Polaroid collage */}
+        {[1,2,3,4,5,6,7,8,9].map((n) => (
+          <div key={n} className={`polaroid bp-${n}`}>
+            <img src={`/fotocabo${n}.PNG`} alt="" />
           </div>
         ))}
+        <div className="hero-overlay" />
 
-        {/* Center content */}
+        {/* Title & CTA */}
         <div className="hero-center">
           <h1 className="fade-up fade-up-d1">
             {lang === "es" ? (
