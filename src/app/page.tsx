@@ -114,8 +114,8 @@ export default function Home() {
       {/* HERO */}
       <section className="hero">
         <img
-          src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/11/la-terminalDJI_0038.jpg"
-          alt="Cabo San Lucas Arch"
+          src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/Parasailing-image-1.jpg"
+          alt="Parasailing in Cabo San Lucas"
           className="hero-bg"
         />
         <div className="hero-overlay" />
