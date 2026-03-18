@@ -64,7 +64,7 @@ body {
 .topbar {
   position: fixed; top:0; left:0; right:0; z-index:900;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 1rem 2.5rem;
+  padding: 1.25rem 2.5rem;
   transition: background .4s ease, border-color .4s ease, box-shadow .4s ease;
 }
 
@@ -104,19 +104,19 @@ body {
 
 .logo {
   font-family: var(--font-playfair), 'Playfair Display', serif;
-  font-size: 1.6rem; text-decoration: none; letter-spacing: -.02em;
+  font-size: 2rem; text-decoration: none; letter-spacing: -.02em;
   transition: color .4s ease;
 }
 .logo span { transition: color .4s ease; }
 .topbar-right { display:flex; gap:1.5rem; align-items:center; }
 .topbar-links { display:flex; gap:2rem; align-items:center; }
 .topbar-links a {
-  text-decoration:none; font-size:.9rem; font-weight:500; transition:color .3s;
+  text-decoration:none; font-size:1.1rem; font-weight:500; transition:color .3s;
 }
 .topbar-wa {
   display:inline-flex; align-items:center; gap:.4rem;
   background:var(--whatsapp); color:var(--white)!important;
-  padding:.5rem 1.15rem; border-radius:50px; font-weight:600!important; font-size:.85rem!important;
+  padding:.5rem 1.15rem; border-radius:50px; font-weight:600!important; font-size:1rem!important;
   transition:transform .2s, box-shadow .2s;
 }
 .topbar-wa:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(37,211,102,.3); }
