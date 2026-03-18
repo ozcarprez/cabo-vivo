@@ -169,15 +169,9 @@ body {
 .hero h1 {
   font-family:var(--font-playfair),'Playfair Display',serif;
   font-size:clamp(2.8rem,7vw,4.5rem); line-height:1.1;
-  color:var(--white); margin-bottom:1.25rem;
+  color:var(--white); margin-bottom:2.5rem;
 }
 .hero h1 em { color:var(--fire-light); font-style:italic; }
-
-.hero-desc {
-  font-size:clamp(1rem,2vw,1.15rem); line-height:1.7;
-  color:rgba(255,255,255,.8); max-width:540px; margin:0 auto 2.25rem;
-  font-weight:300;
-}
 
 .hero-cta {
   display:inline-flex; align-items:center; gap:.6rem;

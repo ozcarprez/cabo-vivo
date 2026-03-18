@@ -165,13 +165,6 @@ export default function Home() {
             )}
           </h1>
 
-          <p className="hero-desc fade-up fade-up-d2">
-            {t(
-              "Nada de formularios eternos ni apps genericas. Platicanos que quieres vivir y nosotros lo hacemos realidad. Trato directo, sin intermediarios.",
-              "No endless forms or generic apps. Tell us what you want to experience and we'll make it happen. Direct service, no middlemen."
-            )}
-          </p>
-
           <a
             href={`${WA_BASE}?text=${encodeURIComponent(t("Hola! Quiero planear mi aventura en Cabo", "Hi! I want to plan my Cabo adventure"))}`}
             target="_blank"
