@@ -113,38 +113,74 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero">
-        <img
-          src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/Parasailing-image-1.jpg"
-          alt="Parasailing in Cabo San Lucas"
-          className="hero-bg"
-        />
-        <div className="hero-overlay" />
+        <div className="hero-inner">
+          {/* LEFT: Text */}
+          <div className="hero-text fade-up fade-up-d1">
+            <span className="hero-label">CABO SAN LUCAS, MEXICO</span>
+            <h1>
+              {lang === "es" ? (
+                <>
+                  Tu aventura
+                  <br />
+                  en Cabo,
+                </>
+              ) : (
+                <>
+                  Your Cabo
+                  <br />
+                  adventure,
+                </>
+              )}
+            </h1>
+            <p className="hero-script">
+              {t("a tu manera.", "your way.")}
+            </p>
 
-        <div className="hero-center">
-          <h1 className="fade-up fade-up-d1">
-            {lang === "es" ? (
-              <>
-                Tu aventura en Cabo,
-                <br />
-                <em>a tu manera.</em>
-              </>
-            ) : (
-              <>
-                Your Cabo adventure,
-                <br />
-                <em>your way.</em>
-              </>
-            )}
-          </h1>
+            <a
+              href="#experiencias"
+              className="hero-cta fade-up fade-up-d2"
+            >
+              {t("¡Reserva ya!", "Book Now!")}
+            </a>
 
-          <a
-            href={`${WA_BASE}?text=${encodeURIComponent(t("Hola! Quiero planear mi aventura en Cabo", "Hi! I want to plan my Cabo adventure"))}`}
-            target="_blank"
-            className="hero-cta fade-up fade-up-d3"
-          >
-            <WaIcon size={20} />
-            {t("Planea tu aventura", "Plan Your Adventure")}
-          </a>
+            <div className="hero-contact fade-up fade-up-d3">
+              <a
+                href={`${WA_BASE}?text=${encodeURIComponent(t("Hola! Quiero planear mi aventura en Cabo", "Hi! I want to plan my Cabo adventure"))}`}
+                target="_blank"
+                className="hero-wa-link"
+              >
+                <WaIcon size={16} />
+                WhatsApp
+              </a>
+              <span className="hero-dot">&bull;</span>
+              <span className="hero-site">cabovivo.com</span>
+            </div>
+          </div>
+
+          {/* RIGHT: Polaroid photos */}
+          <div className="hero-photos fade-up fade-up-d2">
+            <div className="polaroid pol-1">
+              <img
+                src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/Parasailing-image-1.jpg"
+                alt={t("Parasailing en Cabo", "Parasailing in Cabo")}
+              />
+              <span className="pol-caption">{t("Parasailing", "Parasailing")}</span>
+            </div>
+            <div className="polaroid pol-2">
+              <img
+                src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Cabo-Escape-Sunset.jpg"
+                alt={t("Crucero al atardecer", "Sunset Cruise")}
+              />
+              <span className="pol-caption">{t("Atardecer", "Sunset")}</span>
+            </div>
+            <div className="polaroid pol-3">
+              <img
+                src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Snorkel-Fun-Lunch-image-1.jpg"
+                alt={t("Snorkel en Cabo", "Snorkeling in Cabo")}
+              />
+              <span className="pol-caption">{t("Snorkel", "Snorkel")}</span>
+            </div>
+          </div>
         </div>
       </section>
 
