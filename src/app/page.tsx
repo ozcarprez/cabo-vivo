@@ -66,8 +66,18 @@ export default function Home() {
 
   // Combine local photos + Supabase images for hero collage
   const localPhotos = [1,2,3,4,5,6,7,8,9].map((n) => `/fotocabo${n}.PNG`);
+  const EXCLUDED_HERO = [
+    "Portada-", "portada-", "COMBO", "combo", "SIDE-BY-SIDE",
+    "CANAM", "MAVERICK", "RZR", "CABALLOS", "CAMELLO", "EBIKE",
+    "MOUNTAINBIKE", "Skybike", "TODAS-LAS-ATRACCIONES",
+    "Cabo-Wave-Snorkel-Fun", "Cabo-Wave-Morning",
+    "webpromo", "logo", "siticon", "caz-7", "img-5230",
+  ];
   const supabasePhotos = activities
-    .filter((a) => a.image_url)
+    .filter((a) => {
+      if (!a.image_url) return false;
+      return !EXCLUDED_HERO.some((ex) => a.image_url!.includes(ex));
+    })
     .map((a) => a.image_url as string);
   const allHeroPhotos = [...localPhotos, ...supabasePhotos];
 
