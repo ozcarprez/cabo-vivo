@@ -136,12 +136,12 @@ body {
 .hero {
   height:100vh; display:flex; align-items:center; justify-content:center;
   position:relative; overflow:hidden;
-  background:var(--night);
+  background:#FFF8F0;
 }
 
 /* Photo grid as background */
 .hero-grid {
-  position:absolute; inset:-20px;
+  position:absolute; inset:-30px;
   display:grid;
   grid-template-columns:repeat(6, 1fr);
   grid-auto-rows:1fr;
@@ -150,12 +150,14 @@ body {
 }
 .grid-cell {
   min-height:0;
+  aspect-ratio:1;
   background:var(--white);
-  padding:7px 7px 22px;
-  margin:-6px;
+  padding:6px 6px 20px;
+  margin:-5px;
   box-shadow:0 3px 14px rgba(0,0,0,.18), 0 1px 4px rgba(0,0,0,.08);
   transition:transform .35s ease, box-shadow .35s ease, z-index 0s;
   z-index:1;
+  overflow:hidden;
 }
 .grid-cell:hover {
   z-index:10;
@@ -166,8 +168,6 @@ body {
   width:100%; height:100%; object-fit:cover; display:block;
   border-radius:1px;
 }
-.grid-wide { grid-column:span 2; }
-.grid-tall { grid-row:span 2; }
 
 /* Dark overlay */
 .hero-overlay {
