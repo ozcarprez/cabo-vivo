@@ -72,6 +72,7 @@ export default function Home() {
     "MOUNTAINBIKE", "Skybike", "TODAS-LAS-ATRACCIONES",
     "Cabo-Wave-Snorkel-Fun", "Cabo-Wave-Morning",
     "webpromo", "logo", "siticon", "caz-7", "img-5230",
+    "Roundtrip-Los-Cabos-International-Airport-Transfer",
   ];
   const supabasePhotos = activities
     .filter((a) => {
