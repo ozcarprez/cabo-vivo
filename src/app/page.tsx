@@ -64,6 +64,13 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Combine local photos + Supabase images for hero collage
+  const localPhotos = [1,2,3,4,5,6,7,8,9].map((n) => `/fotocabo${n}.PNG`);
+  const supabasePhotos = activities
+    .filter((a) => a.image_url)
+    .map((a) => a.image_url as string);
+  const allHeroPhotos = [...localPhotos, ...supabasePhotos];
+
   return (
     <>
       {/* FLOATING WHATSAPP */}
@@ -114,11 +121,38 @@ export default function Home() {
       {/* HERO */}
       <section className="hero">
         {/* Polaroid collage */}
-        {[1,2,3,4,5,6,7,8,9].map((n) => (
-          <div key={n} className={`polaroid bp-${n}`}>
-            <img src={`/fotocabo${n}.PNG`} alt="" />
-          </div>
-        ))}
+        {allHeroPhotos.map((src, i) => {
+          // Distribute in a grid pattern with slight randomness
+          const cols = 5;
+          const rows = Math.ceil(allHeroPhotos.length / cols);
+          const col = i % cols;
+          const row = Math.floor(i / cols);
+          const baseLeft = (col / cols) * 100;
+          const baseTop = (row / rows) * 100;
+          // Seeded pseudo-random offsets based on index
+          const seed = (i * 7 + 3) % 17;
+          const rotate = ((seed % 31) - 15);
+          const offsetX = ((seed * 3) % 11) - 5;
+          const offsetY = ((seed * 5) % 9) - 4;
+          const size = 180 + ((seed * 2) % 7) * 15;
+
+          return (
+            <div
+              key={i}
+              className="polaroid"
+              style={{
+                width: `${size}px`,
+                height: `${Math.round(size * 0.78)}px`,
+                left: `${baseLeft + offsetX}%`,
+                top: `${baseTop + offsetY}%`,
+                transform: `rotate(${rotate}deg)`,
+                zIndex: (i % 4) + 1,
+              }}
+            >
+              <img src={src} alt="" />
+            </div>
+          );
+        })}
         <div className="hero-overlay" />
 
         {/* Title & CTA */}

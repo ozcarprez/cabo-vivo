@@ -152,27 +152,15 @@ body {
   padding:6px; border-radius:3px;
   box-shadow:0 4px 20px rgba(0,0,0,.18), 0 1px 6px rgba(0,0,0,.08);
   transition:transform .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s ease;
-  z-index:1;
 }
 .polaroid:hover {
-  z-index:8 !important;
-  transform:scale(1.1) rotate(0deg) !important;
+  z-index:20 !important;
+  transform:scale(1.15) rotate(0deg) !important;
   box-shadow:0 20px 56px rgba(0,0,0,.28);
 }
 .polaroid img {
   width:100%; height:100%; object-fit:cover; display:block; border-radius:2px;
 }
-
-/* 9 polaroids — dense collage covering the entire hero */
-.bp-1 { width:280px; height:220px; top:-2%;  left:-2%;  transform:rotate(-8deg);  z-index:2; }
-.bp-2 { width:260px; height:200px; top:-1%;  left:20%;  transform:rotate(6deg);   z-index:3; }
-.bp-3 { width:300px; height:230px; top:0;    right:18%; transform:rotate(-4deg);  z-index:1; }
-.bp-4 { width:270px; height:210px; top:-3%;  right:-2%; transform:rotate(11deg);  z-index:2; }
-.bp-5 { width:250px; height:200px; top:35%;  left:-3%;  transform:rotate(12deg);  z-index:4; }
-.bp-6 { width:290px; height:220px; top:38%;  right:-2%; transform:rotate(-9deg);  z-index:3; }
-.bp-7 { width:280px; height:215px; bottom:-2%; left:-1%; transform:rotate(-6deg); z-index:2; }
-.bp-8 { width:260px; height:200px; bottom:0;  left:24%; transform:rotate(13deg);  z-index:1; }
-.bp-9 { width:300px; height:225px; bottom:-3%; right:-1%; transform:rotate(-11deg);z-index:3; }
 
 /* Center content — no container */
 .hero-center {
@@ -625,15 +613,7 @@ a.exp-card { text-decoration:none; color:inherit; display:block; }
   .hero { min-height:100vh; }
   .hero-center { padding:1.5rem; }
   .hero h1 { font-size:clamp(2rem,9vw,3rem); }
-  /* Smaller polaroids, no overflow, hide a few */
-  .bp-8, .bp-9 { display:none; }
-  .bp-1 { width:150px; height:120px; top:1%;  left:-2%;  }
-  .bp-2 { width:140px; height:110px; top:0;   right:-2%; left:auto; }
-  .bp-3 { width:155px; height:120px; top:16%; left:40%;  right:auto; }
-  .bp-4 { width:145px; height:115px; top:15%; left:-1%;  right:auto; }
-  .bp-5 { width:140px; height:110px; bottom:22%; left:-2%; top:auto; }
-  .bp-6 { width:155px; height:120px; top:50%; right:-1%; left:auto; }
-  .bp-7 { width:150px; height:118px; bottom:-1%; left:5%; }
+  .polaroid { transform:scale(.55) !important; }
   .gallery-grid { grid-template-columns:1fr; }
   .gallery-item, .gallery-item:nth-child(1), .gallery-item:nth-child(5), .gallery-item:nth-child(6) {
     grid-column:span 1; min-height:200px;
