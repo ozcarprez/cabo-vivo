@@ -43,7 +43,6 @@ export default function Home() {
   const { lang, setLang, t } = useLang();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [filter, setFilter] = useState("all");
-  const [heroIndex, setHeroIndex] = useState(0);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -64,29 +63,6 @@ export default function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Exclude promotional banners (text overlays, small/wide banners, combo graphics)
-  const EXCLUDED_IMAGES = [
-    "CAMELLO", "Combo", "combo", "portada-COMBO", "COMBO-3X1",
-    "TODAS-LAS-ATRACCIONES", "Portada-Migrino", "Portada-Beach",
-    "SIDE-BY-SIDE", "CANAM", "MAVERICK", "RZR", "CABALLOS",
-    "EBIKE", "MOUNTAINBIKE", "Skybike", "webpromo",
-  ];
-
-  const heroImages = activities
-    .filter((a) => {
-      if (!a.image_url) return false;
-      return !EXCLUDED_IMAGES.some((ex) => a.image_url!.includes(ex));
-    })
-    .map((a) => a.image_url as string);
-
-  useEffect(() => {
-    if (heroImages.length === 0) return;
-    const interval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [heroImages.length]);
 
   return (
     <>
@@ -137,15 +113,11 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero">
-        {/* Carousel backgrounds */}
-        {heroImages.map((url, i) => (
-          <img
-            key={url}
-            src={url}
-            alt=""
-            className={`hero-slide ${i === heroIndex ? "active" : ""}`}
-          />
-        ))}
+        <img
+          src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/11/la-terminalDJI_0038.jpg"
+          alt="Cabo San Lucas Arch"
+          className="hero-bg"
+        />
         <div className="hero-overlay" />
 
         <div className="hero-center">
