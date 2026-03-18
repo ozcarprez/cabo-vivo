@@ -140,10 +140,15 @@ export default function Home() {
         {/* Photo grid background */}
         <div className="hero-grid">
           {allHeroPhotos.map((src, i) => {
-            // Every 5th photo spans 2 cols, every 7th spans 2 rows for variety
+            const rotations = [-12, 5, -3, 10, 1, -8, 14, -1, 7, -11, 3, -6, 9, -4, 2, -9, 13, -7, 8, -2, 6, -10, 4, -5, 11, -3, 12, -8, 0, 14];
+            const rotate = rotations[i % rotations.length];
             const spanCls = i % 5 === 0 ? "grid-wide" : i % 7 === 0 ? "grid-tall" : "";
             return (
-              <div key={i} className={`grid-cell ${spanCls}`}>
+              <div
+                key={i}
+                className={`grid-cell ${spanCls}`}
+                style={{ transform: `rotate(${rotate}deg)` }}
+              >
                 <img src={src} alt="" />
               </div>
             );
