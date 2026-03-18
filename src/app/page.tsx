@@ -1,10 +1,33 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useLang } from "@/context/LangContext";
+import { supabase } from "@/lib/supabase";
 import WaIcon from "@/components/WaIcon";
 
 const WA_BASE = "https://wa.me/521XXXXXXXXXX";
+
+type Activity = {
+  id: string;
+  name_es: string;
+  name_en: string;
+  description_es: string;
+  description_en: string;
+  category: string;
+  price_usd: number;
+  price_mxn: number;
+  emoji: string;
+  image_url: string | null;
+  active: boolean;
+};
+
+const CATEGORY_LABELS: Record<string, { es: string; en: string }> = {
+  all: { es: "Todos", en: "All" },
+  boat: { es: "Barcos", en: "Boats" },
+  yacht: { es: "Yates", en: "Yachts" },
+  adventure: { es: "Aventura", en: "Adventure" },
+};
 
 function CameraIcon() {
   return (
@@ -17,6 +40,20 @@ function CameraIcon() {
 
 export default function Home() {
   const { lang, setLang, t } = useLang();
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [filter, setFilter] = useState("all");
+
+  useEffect(() => {
+    supabase
+      .from("activities")
+      .select("*")
+      .eq("active", true)
+      .order("category")
+      .order("price_usd")
+      .then(({ data }) => {
+        if (data) setActivities(data);
+      });
+  }, []);
 
   return (
     <>
@@ -231,97 +268,60 @@ export default function Home() {
           )}
         </p>
 
-        <div className="exp-grid">
-          {[
-            {
-              visual: "v-boat",
-              tag: { es: "Popular", en: "Popular" },
-              emoji: "🚤",
-              title: { es: "Tours en Barco & Snorkel", en: "Boat Tours & Snorkeling" },
-              desc: {
-                es: "Recorre el Arco, nada con peces tropicales en la Playa del Amor y disfruta el mar de Cortes como nunca.",
-                en: "Cruise past the Arch, swim with tropical fish at Lover's Beach and experience the Sea of Cortez like never before.",
-              },
-              price: { es: "Desde $1,200", en: "From $65" },
-              unit: { es: "MXN/persona", en: "USD/person" },
-              wa: { es: "Hola! Me interesan los tours en barco 🚤", en: "Hi! I'm interested in boat tours 🚤" },
-            },
-            {
-              visual: "v-adventure",
-              tag: { es: "Adrenalina", en: "Adrenaline" },
-              emoji: "🏜️",
-              title: { es: "Aventura Extrema", en: "Extreme Adventure" },
-              desc: {
-                es: "ATVs por el desierto, tirolesas con vista al oceano, camellos al atardecer. Tu eliges el nivel de intensidad.",
-                en: "ATVs through the desert, ziplines with ocean views, camel rides at sunset. You choose the intensity level.",
-              },
-              price: { es: "Desde $1,500", en: "From $80" },
-              unit: { es: "MXN/persona", en: "USD/person" },
-              wa: { es: "Hola! Quiero info de aventura extrema 🏜️", en: "Hi! I want info about adventure activities 🏜️" },
-            },
-            {
-              visual: "v-fish",
-              tag: { es: "Clasico", en: "Classic" },
-              emoji: "🎣",
-              title: { es: "Pesca Deportiva", en: "Sport Fishing" },
-              desc: {
-                es: "Marlin, dorado, atun — sal en lancha privada con capitanes expertos. Desde medio dia hasta jornadas completas.",
-                en: "Marlin, dorado, tuna — head out on a private boat with expert captains. Half-day to full-day charters available.",
-              },
-              price: { es: "Desde $8,000", en: "From $430" },
-              unit: { es: "MXN/lancha", en: "USD/boat" },
-              wa: { es: "Hola! Me interesa la pesca deportiva 🎣", en: "Hi! I'm interested in sport fishing 🎣" },
-            },
-            {
-              visual: "v-food",
-              tag: { es: "Sabores", en: "Flavors" },
-              emoji: "🌮",
-              title: { es: "Gastronomia & Nightlife", en: "Food & Nightlife" },
-              desc: {
-                es: "Food tours por los mejores tacos locales, cenas en la playa, reservas en restaurantes top y la mejor fiesta de Cabo.",
-                en: "Food tours to the best local tacos, beachfront dinners, top restaurant reservations and the best nightlife in Cabo.",
-              },
-              price: { es: "Desde $800", en: "From $45" },
-              unit: { es: "MXN/persona", en: "USD/person" },
-              wa: { es: "Hola! Quiero experiencias gastronomicas 🌮", en: "Hi! I want food and nightlife experiences 🌮" },
-            },
-            {
-              visual: "v-yacht",
-              tag: { es: "Premium", en: "Premium" },
-              emoji: "🛥️",
-              title: { es: "Renta de Yates", en: "Yacht Rentals" },
-              desc: {
-                es: "Yates privados con tripulacion, snacks, barra libre y todo lo que necesitas para un dia inolvidable en el mar.",
-                en: "Private yachts with full crew, snacks, open bar and everything you need for an unforgettable day at sea.",
-              },
-              price: { es: "Desde $25,000", en: "From $1,350" },
-              unit: { es: "MXN/dia", en: "USD/day" },
-              wa: { es: "Hola! Me interesa rentar un yate 🛥️", en: "Hi! I'm interested in renting a yacht 🛥️" },
-            },
-          ].map((exp, i) => (
-            <div className="exp-card" key={i}>
-              <div className={`exp-visual ${exp.visual}`}>
-                <span className="exp-tag">{exp.tag[lang]}</span>
-                <span className="emoji-bg">{exp.emoji}</span>
-              </div>
-              <div className="exp-body">
-                <h3>{exp.title[lang]}</h3>
-                <p>{exp.desc[lang]}</p>
-                <div className="exp-footer">
-                  <span className="exp-price">
-                    {exp.price[lang]} <small>{exp.unit[lang]}</small>
-                  </span>
-                  <a
-                    href={`${WA_BASE}?text=${encodeURIComponent(exp.wa[lang])}`}
-                    target="_blank"
-                    className="exp-btn"
-                  >
-                    {t("Reservar →", "Book Now →")}
-                  </a>
-                </div>
-              </div>
-            </div>
+        {/* Category filters */}
+        <div className="exp-filters">
+          {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
+            <button
+              key={key}
+              className={`exp-filter-btn ${filter === key ? "active" : ""}`}
+              onClick={() => setFilter(key)}
+            >
+              {label[lang]}
+            </button>
           ))}
+        </div>
+
+        <div className="exp-grid">
+          {activities
+            .filter((a) => filter === "all" || a.category === filter)
+            .map((act) => {
+              const name = lang === "es" ? act.name_es : act.name_en;
+              const desc = lang === "es" ? act.description_es : act.description_en;
+              const shortDesc = desc.length > 120 ? desc.slice(0, 120).replace(/\s+\S*$/, "") + "..." : desc;
+              const waMsg = lang === "es"
+                ? `Hola! Me interesa la actividad: ${act.name_es}`
+                : `Hi! I'm interested in: ${act.name_en}`;
+
+              return (
+                <div className="exp-card" key={act.id}>
+                  <div
+                    className={`exp-visual ${act.image_url ? "has-image" : ""} v-${act.category}`}
+                    style={act.image_url ? { backgroundImage: `url(${act.image_url})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+                  >
+                    <span className="exp-tag">
+                      {CATEGORY_LABELS[act.category]?.[lang] ?? act.category}
+                    </span>
+                    {!act.image_url && <span className="emoji-bg">{act.emoji}</span>}
+                  </div>
+                  <div className="exp-body">
+                    <h3>{name}</h3>
+                    <p>{shortDesc}</p>
+                    <div className="exp-footer">
+                      <span className="exp-price">
+                        ${act.price_usd} <small>USD</small>
+                      </span>
+                      <a
+                        href={`${WA_BASE}?text=${encodeURIComponent(waMsg)}`}
+                        target="_blank"
+                        className="exp-btn"
+                      >
+                        {t("Reservar", "Book Now")} &rarr;
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </section>
 
