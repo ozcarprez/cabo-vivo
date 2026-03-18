@@ -81,11 +81,17 @@ export default function Home() {
     })
     .map((a) => a.image_url as string);
   // Interleave local and Supabase photos so mobile shows both
-  const allHeroPhotos: string[] = [];
+  const basePhotos: string[] = [];
   const maxLen = Math.max(localPhotos.length, supabasePhotos.length);
   for (let i = 0; i < maxLen; i++) {
-    if (i < localPhotos.length) allHeroPhotos.push(localPhotos[i]);
-    if (i < supabasePhotos.length) allHeroPhotos.push(supabasePhotos[i]);
+    if (i < localPhotos.length) basePhotos.push(localPhotos[i]);
+    if (i < supabasePhotos.length) basePhotos.push(supabasePhotos[i]);
+  }
+  // Repeat photos so the grid fills the entire hero (7 cols × ~7 rows = 49 min)
+  const MIN_CELLS = 56;
+  const allHeroPhotos: string[] = [];
+  while (allHeroPhotos.length < MIN_CELLS) {
+    allHeroPhotos.push(...basePhotos);
   }
 
   return (
