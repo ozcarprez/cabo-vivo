@@ -133,20 +133,20 @@ export default function Home() {
       <section className="hero">
         {/* Polaroid collage */}
         {allHeroPhotos.map((src, i) => {
-          // Distribute in a grid pattern with slight randomness
           const cols = 5;
           const rows = Math.ceil(allHeroPhotos.length / cols);
           const col = i % cols;
           const row = Math.floor(i / cols);
-          const baseLeft = (col / cols) * 100;
-          const baseTop = (row / rows) * 100;
-          // Varied rotations: alternating directions, organic feel
+          // Overlap: each cell is 22% wide (overlapping from 20%), offset to fill edges
+          const baseLeft = (col / cols) * 95 - 5;
+          const baseTop = (row / rows) * 90 - 3;
           const rotations = [-12, 5, -3, 10, 1, -8, 14, -1, 7, -14, 3, -6, 11, -9, 2, -5, 13, -11, 8, -2, 6, -13, 4, -7, 9, -4, 12, -10, 0, 15];
           const rotate = rotations[i % rotations.length];
           const seed = (i * 7 + 3) % 17;
-          const offsetX = ((seed * 3) % 11) - 5;
-          const offsetY = ((seed * 5) % 9) - 4;
-          const size = 180 + ((seed * 2) % 7) * 15;
+          const offsetX = ((seed * 3) % 7) - 3;
+          const offsetY = ((seed * 5) % 7) - 3;
+          // Bigger sizes: 260-350px
+          const size = 260 + ((seed * 2) % 7) * 14;
 
           return (
             <div
