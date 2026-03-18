@@ -113,74 +113,37 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero">
-        <div className="hero-inner">
-          {/* LEFT: Text */}
-          <div className="hero-text fade-up fade-up-d1">
-            <span className="hero-label">CABO SAN LUCAS, MEXICO</span>
-            <h1>
-              {lang === "es" ? (
-                <>
-                  Tu aventura
-                  <br />
-                  en Cabo,
-                </>
-              ) : (
-                <>
-                  Your Cabo
-                  <br />
-                  adventure,
-                </>
-              )}
-            </h1>
-            <p className="hero-script">
-              {t("a tu manera.", "your way.")}
-            </p>
-
-            <a
-              href="#experiencias"
-              className="hero-cta fade-up fade-up-d2"
-            >
-              {t("¡Reserva ya!", "Book Now!")}
-            </a>
-
-            <div className="hero-contact fade-up fade-up-d3">
-              <a
-                href={`${WA_BASE}?text=${encodeURIComponent(t("Hola! Quiero planear mi aventura en Cabo", "Hi! I want to plan my Cabo adventure"))}`}
-                target="_blank"
-                className="hero-wa-link"
-              >
-                <WaIcon size={16} />
-                WhatsApp
-              </a>
-              <span className="hero-dot">&bull;</span>
-              <span className="hero-site">cabovivo.com</span>
-            </div>
+        {/* Background polaroids */}
+        {[
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/Parasailing-image-1.jpg", label: "Parasailing", cls: "bp-1" },
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Cabo-Escape-Sunset.jpg", label: t("Atardecer", "Sunset"), cls: "bp-2" },
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Snorkel-Fun-Lunch-image-1.jpg", label: "Snorkel", cls: "bp-3" },
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/MARINE-SAFARI-in-Cabo-San-Lucas-image-1.jpg", label: "Safari Marino", cls: "bp-4" },
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Kraken-Chase-Whale-Watching-Tour-image-1.jpg", label: t("Ballenas", "Whales"), cls: "bp-5" },
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/0-Buccaneer-barco1.jpg", label: t("Barco Pirata", "Pirate Ship"), cls: "bp-6" },
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/Roots-of-Baja-Magical-Town-Tour-in-Todos-Santos-image-1.jpg", label: "Todos Santos", cls: "bp-7" },
+          { src: "https://www.costaazulziplines.com/assets/images/caz-7-large-816x546.webp", label: t("Tirolesas", "Ziplines"), cls: "bp-8" },
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/12/Actual_sunset_sails12.jpg", label: t("Velero", "Sailboat"), cls: "bp-9" },
+          { src: "https://www.wildcabotours.com/wp-content/uploads/sites/1903/2019/05/348406c9-9d3c-4b0e-a128-43ef220229a2.jpg", label: "Paddle Board", cls: "bp-10" },
+        ].map((p) => (
+          <div key={p.cls} className={`polaroid ${p.cls}`}>
+            <img src={p.src} alt={p.label} />
+            <span className="pol-caption">{p.label}</span>
           </div>
+        ))}
 
-          {/* RIGHT: Polaroid photos */}
-          <div className="hero-photos fade-up fade-up-d2">
-            <div className="polaroid pol-1">
-              <img
-                src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2025/12/Parasailing-image-1.jpg"
-                alt={t("Parasailing en Cabo", "Parasailing in Cabo")}
-              />
-              <span className="pol-caption">{t("Parasailing", "Parasailing")}</span>
-            </div>
-            <div className="polaroid pol-2">
-              <img
-                src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Cabo-Escape-Sunset.jpg"
-                alt={t("Crucero al atardecer", "Sunset Cruise")}
-              />
-              <span className="pol-caption">{t("Atardecer", "Sunset")}</span>
-            </div>
-            <div className="polaroid pol-3">
-              <img
-                src="https://www.wildcabotours.com/wp-content/uploads/sites/1903/2018/10/Snorkel-Fun-Lunch-image-1.jpg"
-                alt={t("Snorkel en Cabo", "Snorkeling in Cabo")}
-              />
-              <span className="pol-caption">{t("Snorkel", "Snorkel")}</span>
-            </div>
-          </div>
+        {/* Center content */}
+        <div className="hero-center">
+          <h1 className="fade-up fade-up-d1">
+            {lang === "es" ? (
+              <>Tu aventura en Cabo,<br /><em>a tu manera.</em></>
+            ) : (
+              <>Your Cabo adventure,<br /><em>your way.</em></>
+            )}
+          </h1>
+          <a href="#experiencias" className="hero-cta fade-up fade-up-d2">
+            {t("¡Reserva ya!", "Book Now!")}
+          </a>
         </div>
       </section>
 
